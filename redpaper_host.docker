@@ -1,0 +1,39 @@
+FROM debian:bookworm-slim
+
+# install dependencies
+RUN apt update && apt install -y \
+  sudo bash zsh curl wget make git \
+  ranger ncdu htop neovim ripgrep \
+  # c++ build dependencies
+  build-essential \
+  # python build dependencies
+  python3 python3-dev \
+  # document stuff
+  pandoc texlive texlive-latex-extra \
+  && apt clean && rm -rf /var/lib/apt/lists/*
+
+# install poetry for python
+RUN curl -sSL https://install.python-poetry.org | python3 - \
+  && echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+
+# cool shell
+RUN true \
+    && git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install \
+    && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    # edit the config to add fzf to plugins
+    && sed -i 's/plugins=(git)/plugins=(fzf)/g' /root/.zshrc \
+    # install zsh-autosuggestions
+    && git clone https://github.com/zsh-users/zsh-autosuggestions /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
+    # install zsh-syntax-highlighting
+    && git clone https://github.com/zsh-users/zsh-syntax-highlighting /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
+    # change the theme
+    && sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="cypher"/g' /root/.zshrc \
+    # set default shell
+    && usermod --shell /bin/zsh root \
+    # set hostname
+    && echo "redpaper_host" > /etc/hostname \
+    && echo "Fancy shell installed"
+
+# redbuild setup
+WORKDIR /prj
+CMD ["/bin/bash", "-l"]

@@ -24,4 +24,5 @@ cd /prj
 pandoc --dpi=300 --template /data/templates/tufte/tufte-handout-template.tex -i ./examples/doc1.md -o ./examples/doc1_tufte.pdf
 pandoc --dpi=300 --template /data/templates/classic/classic-template.tex -i ./examples/doc1.md -o ./examples/doc1_classic.pdf
 pandoc --dpi=300 --template /data/templates/eisvogel/eisvogel-template.tex -i ./examples/doc1.md -o ./examples/doc1_eisvogel.pdf
+pandoc --dpi=300 --pdf-engine=lualatex --template /data/templates/style2/style2-template.tex -i ./examples/doc1.md -o ./examples/doc1_style2.pdf
 ```

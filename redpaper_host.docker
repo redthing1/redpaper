@@ -11,7 +11,7 @@ RUN apt update && apt install -y \
   # python packages
   python3-sh python3-typer python3-rich python3-pygments \
   # document stuff
-  pandoc texlive texlive-latex-extra texlive-fonts-extra \
+  pandoc texlive texlive-luatex texlive-latex-extra texlive-fonts-extra \
   && apt clean && rm -rf /var/lib/apt/lists/*
 
 # install some more python packages

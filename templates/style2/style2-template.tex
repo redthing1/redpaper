@@ -1,6 +1,11 @@
 % a pandoc.latex template inspired by: https://gist.github.com/michaelt/1017790
 
-\documentclass[12pt]{scrartcl}
+% \documentclass[12pt]{scrartcl}
+% \documentclass[12pt]{article}
+
+% https://tex.stackexchange.com/questions/88793/using-koma-scripts-scrartcl-class-as-an-american-academic-suggested-changes
+% \documentclass[letterpaper,10pt]{scrartcl}
+\documentclass[letterpaper,12pt]{scrartcl}
 
 % The declaration of the document class:
 
@@ -80,7 +85,21 @@
 % Because we are using XeTeX material,
 % this template needs to be called with the `--xetex` flag. 
 % let's use LuaTeX instead of XeTeX
-\usepackage{fontspec,luatextra}
+% \usepackage{fontspec,luatextra}
+
+% let's use fontspec
+\usepackage{fontspec}
+
+% engine specific packages
+\usepackage{ifxetex,ifluatex}
+% xetex specific packages
+\ifxetex
+  \usepackage{xltxtra,xunicode}
+\fi
+% luatex specific packages
+\ifluatex
+  \usepackage{luatextra}
+\fi
 
 % Symbols: 
 % Pandoc imports the extensive `amsmath` collection of symbols 
@@ -138,21 +157,35 @@
 % \usepackage[varqu,varl,var0,scaled=0.97]{inconsolata}
 % \usepackage{FiraSans}
 
-% let's use a garamond for the main font
-\setmainfont{ebgaramond}
-% and let's use inconsolata for the monospace font
-\setmonofont{inconsolata}
-% and let's use Fira Sans for the sans-serif font
+% custom fonts!
+% note that lualatex can be really slow the first time the font is used
+
+% % let's use a garamond for the main font
+% \setmainfont{ebgaramond}
+% % and let's use inconsolata for the monospace font
+% \setmonofont{inconsolata}
+% % and let's use Fira Sans for the sans-serif font
+% \setsansfont{Fira Sans}
+
+% new theme: Alegreya, Iosevka, Fira Sans
+\usepackage[T1]{fontenc}
+\usepackage{Alegreya}
+\setmainfont{Alegreya}
+% \setmonofont{Iosevka Slab}
+\setmonofont{Iosevka Slab}[Scale=MatchLowercase]
 \setsansfont{Fira Sans}
+
+% other cool monospace fonts
+% \setmonofont{inconsolata}
+% https://github.com/tonsky/FiraCode/wiki/LaTeX-instructions
+% \usepackage{lstfiracode}
+% \setmonofont{Fira Code}
 
 % Properly one should specify a sanserif font and a monospace font
 % see e.g. the example of Kieran Healy:
 % \setromanfont[Mapping=tex-text,Numbers=OldStyle]{Minion Pro} 
 % \setsansfont[Mapping=tex-text]{Minion Pro} 
 % \setmonofont[Mapping=tex-text,Scale=0.8]{Pragmata}
-
-% But I hate sanserif fonts, and anyway there are defaults.
-
 
 
 % Heading styles:

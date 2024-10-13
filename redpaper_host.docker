@@ -12,6 +12,8 @@ RUN apt update && apt install -y \
   python3-sh python3-typer python3-rich python3-pygments \
   # document stuff
   pandoc texlive texlive-luatex texlive-latex-extra texlive-fonts-extra \
+  # fonts
+  fonts-firacode \
   && apt clean && rm -rf /var/lib/apt/lists/*
 
 # install some more python packages
@@ -40,6 +42,14 @@ RUN true \
   # set hostname
   && echo "redpaper_host" > /etc/hostname \
   && echo "Fancy shell installed"
+
+# additional resources
+
+# iosevka font
+RUN cd /tmp && wget https://github.com/be5invis/Iosevka/releases/download/v31.8.0/PkgTTC-IosevkaSlab-31.8.0.zip \
+  && mkdir /usr/share/fonts/truetype/iosevka \
+  && unzip PkgTTC-IosevkaSlab-31.8.0.zip -d /usr/share/fonts/truetype/iosevka \
+  && fc-cache -f
 
 WORKDIR /prj
 CMD ["/bin/zsh", "-l"]

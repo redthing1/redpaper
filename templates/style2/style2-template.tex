@@ -5,7 +5,10 @@
 
 % https://tex.stackexchange.com/questions/88793/using-koma-scripts-scrartcl-class-as-an-american-academic-suggested-changes
 % \documentclass[letterpaper,10pt]{scrartcl}
-\documentclass[letterpaper,12pt]{scrartcl}
+% \documentclass[letterpaper,12pt]{scrartcl}
+
+% select base font size based on pandoc variable $fontsize$
+\documentclass[$if(fontsize)$$fontsize$$else$12pt$endif$]{scrartcl}
 
 % The declaration of the document class:
 

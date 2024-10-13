@@ -1,6 +1,7 @@
 ---
 title: "Cryptographic Algorithms and Techniques: A Typographical Showcase"
 author: Claude 3.5 Sonnet
+fontsize: 10pt
 ---
 
 # Symmetric Encryption Algorithms
@@ -259,6 +260,7 @@ In a CPA, the attacker can choose arbitrary plaintexts to be encrypted and obtai
 Required Plaintext: 1 character.
 
 Attack Steps:
+
 1. Choose plaintext $P = \text{"A"}$.
 2. Obtain ciphertext $C = \text{Enc}(k, P)$.
 3. Compute the shift as $k = C - P$ (mod 26).
@@ -268,6 +270,7 @@ Attack Steps:
 Required Plaintext: 26 unique characters (the entire alphabet).
 
 Attack Steps:
+
 1. Choose plaintext $P = \text{"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}$.
 2. Obtain ciphertext $C = \text{Enc}(\pi, P)$.
 3. Deduce the permutation $\pi$ by mapping each $P_i$ to $C_i$.
@@ -277,6 +280,7 @@ Attack Steps:
 Required Plaintext: $b \cdot n$ characters, where $n$ is the key length and $b$ is a small integer.
 
 Attack Steps:
+
 1. Choose plaintext $P = \text{"AAAA\ldots"}$ (repeating "A").
 2. Obtain ciphertext $C = \text{Enc}(k, P)$.
 3. Use the Index of Coincidence to determine the key length $n$.
@@ -307,6 +311,7 @@ Quantum cryptography leverages principles of quantum mechanics to achieve secure
 QKD allows two parties to generate a shared random secret key, which can then be used for secure communication. The most well-known QKD protocol is BB84.
 
 **BB84 Protocol Steps:**
+
 1. **Preparation:** Alice prepares a sequence of qubits in one of four possible polarization states.
 2. **Transmission:** Alice sends the qubits to Bob over a quantum channel.
 3. **Measurement:** Bob randomly chooses a measurement basis (rectilinear or diagonal) for each qubit and measures them.

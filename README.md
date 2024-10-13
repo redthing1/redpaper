@@ -1,6 +1,12 @@
-# rt1_pandoc_templates
+# pandoc templates
 
-pandoc templates and toolkit
+a set of pandoc templates, and a containerized environment to compile documents.
+
+# flagship theme (`style2`):
+
+<img src="./media/crypto_showcase_style2-1.png" width="400"/> <img src="./media/crypto_showcase_style2-4.png" width="400"/> 
+
+# usage
 
 ## redpaper host
 

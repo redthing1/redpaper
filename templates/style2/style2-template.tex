@@ -102,7 +102,9 @@
 % the `geometry` package makes for convenient adjusting of margins, which is what
 % you asked about.  Of course it can do much more, even make coffee for you:
 \usepackage{geometry}
-\geometry{verbose,letterpaper,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+% \geometry{verbose,letterpaper,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+% let's do a standard 1in margin
+\geometry{verbose,letterpaper,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
 % so if you just keep a copy of this template in the directory you are working in, you
 % can adjust the margins by going into this file and messing with the margins.
 % the syntax is very unforgiving, but permits 3cm and 2.5in and some other things.
@@ -121,9 +123,27 @@
 % I will comment it out and supply something more certain to be around:
 
 % \setmainfont{Times Roman}
-% let's use the Libertine font
-\setmainfont{Linux Libertine O}
+
+% % let's use the Libertine font
+% \setmainfont{Linux Libertine O}
+
+% % actually, let's use Domitian, which is like Palatino
 % \setmainfont{domitian}
+
+% https://tex.stackexchange.com/a/269614
+% \usepackage[garamond]{mathdesign}
+% \usepackage[full]{textcomp}
+% \usepackage{garamondx}
+% \usepackage[ebgaramond]{newtx}
+% \usepackage[varqu,varl,var0,scaled=0.97]{inconsolata}
+% \usepackage{FiraSans}
+
+% let's use a garamond for the main font
+\setmainfont{ebgaramond}
+% and let's use inconsolata for the monospace font
+\setmonofont{inconsolata}
+% and let's use Fira Sans for the sans-serif font
+\setsansfont{Fira Sans}
 
 % Properly one should specify a sanserif font and a monospace font
 % see e.g. the example of Kieran Healy:

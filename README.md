@@ -1,10 +1,14 @@
-# pandoc templates
 
-a set of pandoc templates, and a containerized environment to compile documents.
+# redpaper
+
+a containerized environment for authoring documents, including my personal templates.
+
+uses [pandoc](https://pandoc.org/) to convert markup to latex.
 
 # flagship theme (`style2`):
 
-<img src="./media/crypto_showcase_style2-1.png" width="400"/> <img src="./media/crypto_showcase_style2-4.png" width="400"/> 
+<img src="./media/crypto_showcase_style2-1.png" width="400"/>
+<img src="./media/crypto_showcase_style2-4.png" width="400"/> 
 
 # usage
 
@@ -26,7 +30,6 @@ podman run --rm -it -v $(pwd):/prj -v $(pwd):/data redthing1/redpaper_host
 
 render some examples (within container shell):
 ```sh
-cd /prj
 pandoc --dpi=300 --template /data/templates/tufte/tufte-handout-template.tex -i ./examples/doc1.md -o ./examples/doc1_tufte.pdf
 pandoc --dpi=300 --template /data/templates/classic/classic-template.tex -i ./examples/doc1.md -o ./examples/doc1_classic.pdf
 pandoc --dpi=300 --template /data/templates/eisvogel/eisvogel-template.tex -i ./examples/doc1.md -o ./examples/doc1_eisvogel.pdf

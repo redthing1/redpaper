@@ -28,48 +28,21 @@ RUN curl -sSL https://install.python-poetry.org | python3 - \
 
 # additional resources
 
-# install fonts from CTAN
-RUN mkdir -p ~/texmf/fonts/opentype/alegreya ~/texmf/tex/latex/alegreya \
-  ~/texmf/fonts/opentype/fira ~/texmf/tex/latex/fira \
-  && cd /tmp \
-  # install alegreya
-  && wget https://mirrors.ctan.org/fonts/alegreya.zip \
-  && unzip alegreya.zip \
-  && cp -R alegreya/opentype/* ~/texmf/fonts/opentype/alegreya/ \
-  && cp -R alegreya/latex/* ~/texmf/tex/latex/alegreya/ \
-  && rm -rf alegreya* \
-  # install fira
-  && wget https://mirrors.ctan.org/fonts/fira.zip \
-  && unzip fira.zip \
-  && cp -R fira/opentype/* ~/texmf/fonts/opentype/fira/ \
-  && cp -R fira/latex/* ~/texmf/tex/latex/fira/ \
-  && rm -rf fira* \
-  # update font cache and TeX database
-  && fc-cache -f \
-  && texhash ~/texmf
+# copy CTAN installation scripts
+COPY ./resources/install_font.sh /usr/local/bin/
+COPY ./resources/install_package.sh /usr/local/bin/
 
-# iosevka font
-RUN cd /tmp && wget https://github.com/be5invis/Iosevka/releases/download/v31.8.0/PkgTTC-IosevkaSlab-31.8.0.zip \
-  && mkdir /usr/share/fonts/truetype/iosevka \
-  && unzip PkgTTC-IosevkaSlab-31.8.0.zip -d /usr/share/fonts/truetype/iosevka \
-  && fc-cache -f
+# install fonts
+RUN \
+  install_font.sh iosevka https://github.com/be5invis/Iosevka/releases/download/v31.8.0/PkgTTC-IosevkaSlab-31.8.0.zip raw && \
+  install_font.sh alegreya https://mirrors.ctan.org/fonts/alegreya.zip && \
+  install_font.sh fira https://mirrors.ctan.org/fonts/fira.zip
 
-# install packages from CTAN
-RUN mkdir -p ~/texmf/tex/latex/footmisc ~/texmf/tex/latex/ulem \
-  && cd /tmp \
-  # install footmisc
-  && wget https://mirrors.ctan.org/macros/latex/contrib/footmisc.zip \
-  && unzip footmisc.zip \
-  && cp footmisc/*.sty ~/texmf/tex/latex/footmisc/ \
-  && rm -rf footmisc* \
-  # install ulem
-  && wget https://mirrors.ctan.org/macros/latex/contrib/ulem.zip \
-  && unzip ulem.zip \
-  && cp ulem/*.sty ~/texmf/tex/latex/ulem/ \
-  # update tex database
-  && texhash ~/texmf \
-  # clean up
-  && rm -rf /tmp/*
+# install latex packages
+RUN \
+  install_package.sh footmisc https://mirrors.ctan.org/macros/latex/contrib/footmisc.zip && \
+  install_package.sh ulem https://mirrors.ctan.org/macros/latex/contrib/ulem.zip && \
+  rm -rf /tmp/*
 
 # pre-caching
 # since lualatex is super slow to load fonts, we pre-cache the fonts

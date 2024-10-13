@@ -202,7 +202,8 @@
 % I'm puzzled why I have this foonote speciality, 
 % I wonder if it's part of my problem I've been having, but wont look
 % into it now. 
-\usepackage[flushmargin]{footmisc} 
+% \usepackage[flushmargin]{footmisc} 
+\usepackage[flushmargin]{footmisc-2011-06-06}
 % \usepackage[hang,flushmargin]{footmisc}
 
 
@@ -358,6 +359,10 @@ $endfor$
 
 % pandoc common.tex
 $common.tex()$
+
+% other includes
+% for mathbb
+\usepackage{amsfonts}
 
 % Title, authors, date.
 % If you specified title authors and date at the start of 

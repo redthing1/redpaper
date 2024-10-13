@@ -4,6 +4,7 @@ FROM debian:bookworm-slim
 RUN apt update && apt install -y \
   sudo bash zsh curl wget make git \
   ranger ncdu htop neovim ripgrep \
+  unzip p7zip \
   # c++ build dependencies
   build-essential \
   # python build dependencies
@@ -11,8 +12,8 @@ RUN apt update && apt install -y \
   # python packages
   python3-sh python3-typer python3-rich python3-pygments \
   # document stuff
-  pandoc texlive texlive-luatex texlive-latex-extra texlive-fonts-extra \
-  # fonts
+  pandoc texlive texlive-luatex texlive-latex-recommended texlive-fonts-recommended \
+  # packaged fonts
   fonts-firacode \
   && apt clean && rm -rf /var/lib/apt/lists/*
 
@@ -24,6 +25,63 @@ RUN pip install --break-system-packages \
 # install poetry for python
 RUN curl -sSL https://install.python-poetry.org | python3 - \
   && echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+
+# additional resources
+
+# install fonts from CTAN
+RUN mkdir -p ~/texmf/fonts/opentype/alegreya ~/texmf/tex/latex/alegreya \
+  ~/texmf/fonts/opentype/fira ~/texmf/tex/latex/fira \
+  && cd /tmp \
+  # install alegreya
+  && wget https://mirrors.ctan.org/fonts/alegreya.zip \
+  && unzip alegreya.zip \
+  && cp -R alegreya/opentype/* ~/texmf/fonts/opentype/alegreya/ \
+  && cp -R alegreya/latex/* ~/texmf/tex/latex/alegreya/ \
+  && rm -rf alegreya* \
+  # install fira
+  && wget https://mirrors.ctan.org/fonts/fira.zip \
+  && unzip fira.zip \
+  && cp -R fira/opentype/* ~/texmf/fonts/opentype/fira/ \
+  && cp -R fira/latex/* ~/texmf/tex/latex/fira/ \
+  && rm -rf fira* \
+  # update font cache and TeX database
+  && fc-cache -f \
+  && texhash ~/texmf
+
+# iosevka font
+RUN cd /tmp && wget https://github.com/be5invis/Iosevka/releases/download/v31.8.0/PkgTTC-IosevkaSlab-31.8.0.zip \
+  && mkdir /usr/share/fonts/truetype/iosevka \
+  && unzip PkgTTC-IosevkaSlab-31.8.0.zip -d /usr/share/fonts/truetype/iosevka \
+  && fc-cache -f
+
+# install packages from CTAN
+RUN mkdir -p ~/texmf/tex/latex/footmisc ~/texmf/tex/latex/ulem \
+  && cd /tmp \
+  # install footmisc
+  && wget https://mirrors.ctan.org/macros/latex/contrib/footmisc.zip \
+  && unzip footmisc.zip \
+  && cp footmisc/*.sty ~/texmf/tex/latex/footmisc/ \
+  && rm -rf footmisc* \
+  # install ulem
+  && wget https://mirrors.ctan.org/macros/latex/contrib/ulem.zip \
+  && unzip ulem.zip \
+  && cp ulem/*.sty ~/texmf/tex/latex/ulem/ \
+  # update tex database
+  && texhash ~/texmf \
+  # clean up
+  && rm -rf /tmp/*
+
+# pre-caching
+# since lualatex is super slow to load fonts, we pre-cache the fonts
+# also see: https://tex.stackexchange.com/questions/479744/what-is-the-least-resource-intensive-way-to-generate-the-luatex-font-cache-for-a
+# cache is located at /var/lib/texmf/luatex-cache/generic/fonts/otl
+# we will do this by running a document which loads the fonts we need
+# copy the font cache document
+COPY ./resources/font_cache.tex /tmp/font_cache.tex
+# compile the document
+RUN lualatex -interaction=nonstopmode /tmp/font_cache.tex && \
+  rm /tmp/font_cache.* && \
+  texhash
 
 # cool shell
 RUN true \
@@ -37,19 +95,13 @@ RUN true \
   && git clone https://github.com/zsh-users/zsh-syntax-highlighting /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
   # change the theme
   && sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="cypher"/g' /root/.zshrc \
+  # disable auto-update
+  && sed -i 's/# DISABLE_AUTO_UPDATE="true"/DISABLE_AUTO_UPDATE="true"/g' /root/.zshrc \
   # set default shell
   && usermod --shell /bin/zsh root \
   # set hostname
   && echo "redpaper_host" > /etc/hostname \
   && echo "Fancy shell installed"
-
-# additional resources
-
-# iosevka font
-RUN cd /tmp && wget https://github.com/be5invis/Iosevka/releases/download/v31.8.0/PkgTTC-IosevkaSlab-31.8.0.zip \
-  && mkdir /usr/share/fonts/truetype/iosevka \
-  && unzip PkgTTC-IosevkaSlab-31.8.0.zip -d /usr/share/fonts/truetype/iosevka \
-  && fc-cache -f
 
 WORKDIR /prj
 CMD ["/bin/zsh", "-l"]

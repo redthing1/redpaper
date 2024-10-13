@@ -41,6 +41,20 @@ ninja -C build-riscv
 
 This should output `build-riscv/bsc-m03_linux_riscv64`, a statically linked RISCV64 binary.
 
+# Headings
+
+## Second Level
+
+Some text.
+
+### Third level
+
+This is text at the third level.
+
+#### Fourth level
+
+You should basically never write at this level.
+
 # Math Examples
 
 ## Probability

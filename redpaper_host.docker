@@ -33,22 +33,24 @@ COPY ./resources/install_font.sh /usr/local/bin/
 COPY ./resources/install_package.sh /usr/local/bin/
 
 # install fonts
+COPY ./fonts /tmp/fonts
 RUN \
-  install_font.sh raw iosevka https://github.com/be5invis/Iosevka/releases/download/v31.8.0/PkgTTC-IosevkaSlab-31.8.0.zip && \
+  install_font.sh zip iosevka https://github.com/be5invis/Iosevka/releases/download/v31.9.0/PkgTTC-Iosevka-31.9.0.zip && \
   install_font.sh ctan alegreya https://mirrors.ctan.org/fonts/alegreya.zip && \
   install_font.sh ctan ebgaramond https://mirrors.ctan.org/fonts/ebgaramond.zip && \
   install_font.sh ctan inconsolata https://mirrors.ctan.org/fonts/inconsolata.zip && \
-  install_font.sh dir austera ./fonts/AusteraText && \
-  install_font.sh dir messina-sans ./fonts/MessinaSans && \
-  install_font.sh dir native-mono ./fonts/NativeMono && \
-  install_font.sh dir jenson-pro ./fonts/AdobeJensonPro && \
-  install_font.sh dir monograf ./fonts/Monograf && \
-  install_font.sh dir queue ./fonts/QueueMono && \
-  install_font.sh dir basis-grotesque-mono ./fonts/BasisGrotesqueMonoPro && \
-  install_font.sh dir palatino-nova ./fonts/PalatinoNova && \
-  install_font.sh dir source-code-pro ./fonts/SourceCodePro && \
-  install_font.sh dir helvetica-now-text ./fonts/HelveticaNowText && \
-  install_font.sh ctan fira https://mirrors.ctan.org/fonts/fira.zip
+  install_font.sh ctan fira https://mirrors.ctan.org/fonts/fira.zip && \
+  install_font.sh dir austera /tmp/fonts/AusteraText && \
+  install_font.sh dir messina-sans /tmp/fonts/MessinaSans && \
+  install_font.sh dir native-mono /tmp/fonts/NativeMono && \
+  install_font.sh dir jenson-pro /tmp/fonts/AdobeJensonPro && \
+  install_font.sh dir monograf /tmp/fonts/Monograf && \
+  install_font.sh dir queue /tmp/fonts/QueueMono && \
+  install_font.sh dir basis-grotesque-mono /tmp/fonts/BasisGrotesqueMonoPro && \
+  install_font.sh dir palatino-nova /tmp/fonts/PalatinoNova && \
+  install_font.sh dir source-code-pro /tmp/fonts/SourceCodePro && \
+  install_font.sh dir helvetica-now-text /tmp/fonts/HelveticaNowText && \
+  rm -rf /tmp/fonts
 
 # install latex packages
 RUN \

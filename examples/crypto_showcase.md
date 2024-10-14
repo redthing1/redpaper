@@ -13,7 +13,7 @@ This section explores various symmetric encryption algorithms, showcasing their 
 
 AES is a widely-adopted block cipher standardized by NIST. It operates on fixed-size blocks of 128 bits and supports key sizes of 128, 192, or 256 bits.
 
-## Formal Definition
+### Formal Definition
 
 [$\text{Gen}()$]{.underline}:
 
@@ -39,7 +39,7 @@ AES is a widely-adopted block cipher standardized by NIST. It operates on fixed-
 
 ChaCha20 is a stream cipher designed for high performance and strong security, operating on 512-bit blocks with a 256-bit key.
 
-## Formal Definition
+### Formal Definition
 
 [$\text{Gen}()$]{.underline}:
 
@@ -60,11 +60,80 @@ ChaCha20 is a stream cipher designed for high performance and strong security, o
 3. Compute $m \leftarrow c \oplus ks$
 4. Return $m$
 
+### Excerpt of Implementation
+
+```c
+// https://tools.ietf.org/html/rfc7539#section-2.1
+static void chacha20_quarterround(uint32_t* x, int a, int b, int c, int d) {
+  x[a] += x[b];
+  x[d] = rotl32(x[d] ^ x[a], 16);
+  x[c] += x[d];
+  x[b] = rotl32(x[b] ^ x[c], 12);
+  x[a] += x[b];
+  x[d] = rotl32(x[d] ^ x[a], 8);
+  x[c] += x[d];
+  x[b] = rotl32(x[b] ^ x[c], 7);
+}
+
+static void chacha20_serialize(uint32_t in[16], uint8_t output[64]) {
+  int i;
+  for (i = 0; i < 16; i++) {
+    u32t8le(in[i], output + (i << 2));
+  }
+}
+
+static void chacha20_block(uint32_t in[16], uint8_t out[64], int num_rounds) {
+  int i;
+  uint32_t x[16];
+
+  memcpy(x, in, sizeof(uint32_t) * 16);
+
+  for (i = num_rounds; i > 0; i -= 2) {
+    chacha20_quarterround(x, 0, 4, 8, 12);
+    chacha20_quarterround(x, 1, 5, 9, 13);
+    chacha20_quarterround(x, 2, 6, 10, 14);
+    chacha20_quarterround(x, 3, 7, 11, 15);
+    chacha20_quarterround(x, 0, 5, 10, 15);
+    chacha20_quarterround(x, 1, 6, 11, 12);
+    chacha20_quarterround(x, 2, 7, 8, 13);
+    chacha20_quarterround(x, 3, 4, 9, 14);
+  }
+
+  for (i = 0; i < 16; i++) {
+    x[i] += in[i];
+  }
+
+  chacha20_serialize(x, out);
+}
+
+// https://tools.ietf.org/html/rfc7539#section-2.3
+static void chacha20_init_state(uint32_t s[16], uint8_t key[32], uint32_t counter, uint8_t nonce[12]) {
+  int i;
+
+  // refer: https://dxr.mozilla.org/mozilla-beta/source/security/nss/lib/freebl/chacha20.c
+  // convert magic number to string: "expand 32-byte k"
+  s[0] = 0x61707865;
+  s[1] = 0x3320646e;
+  s[2] = 0x79622d32;
+  s[3] = 0x6b206574;
+
+  for (i = 0; i < 8; i++) {
+    s[4 + i] = u8t32le(key + i * 4);
+  }
+
+  s[12] = counter;
+
+  for (i = 0; i < 3; i++) {
+    s[13 + i] = u8t32le(nonce + i * 4);
+  }
+}
+```
+
 ## Mono-Alphabetic Substitution Cipher
 
 A simple cipher that replaces each letter in the plaintext with another fixed letter.
 
-## Formal Definition
+### Formal Definition
 
 [$\text{Gen}()$]{.underline}:
 
@@ -94,7 +163,7 @@ Asymmetric encryption algorithms use a pair of keys: a public key for encryption
 
 RSA is one of the first public-key cryptosystems and is widely used for secure data transmission.
 
-## Formal Definition
+### Formal Definition
 
 [$\text{Gen}()$]{.underline}:
 
@@ -119,7 +188,7 @@ RSA is one of the first public-key cryptosystems and is widely used for secure d
 
 ECC is based on the algebraic structure of elliptic curves over finite fields, offering similar security to RSA with smaller key sizes.
 
-## Formal Definition
+### Formal Definition
 
 [$\text{Gen}()$]{.underline}:
 
@@ -149,7 +218,7 @@ Cryptanalysis involves studying cryptographic algorithms to find weaknesses or d
 
 Frequency analysis exploits the non-uniform frequency distribution of letters in natural languages to break classical ciphers.
 
-## Methodology
+### Methodology
 
 Let $f_i$ be the frequency of the $i$-th letter in the ciphertext, and $p_i$ be the expected frequency in the plaintext language. The **Index of Coincidence (IC)** is defined as:
 
@@ -161,7 +230,7 @@ For English text, $IC \approx 0.065$. Deviations from this value may indicate th
 
 Linear cryptanalysis is a method of exploiting linear approximations to describe the behavior of the block cipher.
 
-## Formal Definition
+### Formal Definition
 
 For a block cipher with $n$-bit plaintext $P$, $n$-bit ciphertext $C$, and key $K$, linear cryptanalysis seeks linear expressions involving bits of $P$, $C$, and $K$ such that:
 
@@ -185,7 +254,7 @@ Modern cryptography encompasses a variety of primitives that serve as building b
 
 Hash functions map data of arbitrary size to fixed-size values, ensuring properties like preimage resistance and collision resistance.
 
-## SHA-256
+### SHA-256
 
 SHA-256 is a member of the SHA-2 family, producing a 256-bit hash value.
 
@@ -195,7 +264,7 @@ $$ \text{SHA-256}(m) \rightarrow h \in \{0,1\}^{256} $$
 
 Digital signatures provide a method for verifying the authenticity and integrity of messages.
 
-## ECDSA (Elliptic Curve Digital Signature Algorithm)
+### ECDSA (Elliptic Curve Digital Signature Algorithm)
 
 [$\text{Sign}(d, m)$]{.underline}:
 
@@ -221,7 +290,7 @@ Cryptographic protocols define the rules and procedures for secure communication
 
 The Diffie-Hellman protocol allows two parties to establish a shared secret over an insecure channel.
 
-## Protocol Steps
+### Protocol Steps
 
 a) **Parameter Agreement:** Agree on a large prime $p$ and base $g$ such that $g$ is a primitive root modulo $p$.
 b) **Key Generation:**
@@ -237,7 +306,7 @@ e) **Result:** Both parties now share the secret $s$, which can be used as a sym
 
 TLS is a widely-used protocol that ensures privacy and data integrity between two communicating applications.
 
-## Handshake Process
+### Handshake Process
 
 a) **Client Hello:** The client sends a "Client Hello" message with supported cipher suites and a random nonce.
 b) **Server Hello:** The server responds with a "Server Hello" message, selecting the cipher suite and sending its own random nonce.
@@ -254,7 +323,7 @@ Understanding potential attacks is crucial for designing robust cryptographic sy
 
 In a CPA, the attacker can choose arbitrary plaintexts to be encrypted and obtain the corresponding ciphertexts, aiming to uncover the encryption key or plaintexts of other ciphertexts.
 
-## Breaking Classical Ciphers under CPA
+### Breaking Classical Ciphers under CPA
 
 **Shift Cipher**
 
@@ -307,7 +376,7 @@ If the same modulus $n$ is used with different public exponents $e_1$ and $e_2$,
 
 Quantum cryptography leverages principles of quantum mechanics to achieve secure communication.
 
-## Quantum Key Distribution (QKD)
+### Quantum Key Distribution (QKD)
 
 QKD allows two parties to generate a shared random secret key, which can then be used for secure communication. The most well-known QKD protocol is BB84.
 
@@ -323,7 +392,7 @@ QKD allows two parties to generate a shared random secret key, which can then be
 
 With the advent of quantum computing, traditional cryptographic algorithms like RSA and ECC are vulnerable. Post-quantum cryptography aims to develop secure algorithms resistant to quantum attacks.
 
-## Lattice-Based Cryptography
+### Lattice-Based Cryptography
 
 Lattice-based schemes rely on the hardness of lattice problems, such as the Shortest Vector Problem (SVP) and Learning With Errors (LWE).
 

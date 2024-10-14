@@ -7,6 +7,13 @@ uses [pandoc](https://pandoc.org/) to convert markup to latex.
 
 # flagship theme (`style2`):
 
+vibes:
++ `classic` (default)
++ `alternate`
++ `forward`
++ `orthographic`
++ `artistic`
+
 <img src="./media/crypto_showcase_style2-1.png" width="400"/>
 <img src="./media/crypto_showcase_style2-4.png" width="400"/> 
 

@@ -193,14 +193,36 @@ $endif$
 \ifdefstring{\vibe}{classic}{%
   % Classic vibe: Alegreya, Iosevka, Fira Sans
   \setmainfont{Alegreya}
-  \setmonofont{Iosevka Slab}[Scale=MatchLowercase]
+  \setmonofont{Iosevka Slab}[Scale=0.8]
   \setsansfont{Fira Sans}
 }{}
 
 \ifdefstring{\vibe}{alternate}{%
+  % Alternate vibe: ebgaramond, inconsolata, Fira Sans
   \setmainfont{ebgaramond}
   \setmonofont{inconsolata}
   \setsansfont{Fira Sans}
+}{}
+
+\ifdefstring{\vibe}{forward}{%
+  % Forward vibe: Austera, Native, Messina Sans
+  \setmainfont{Austera Text}
+  \setmonofont{Native}[Scale=0.8]
+  \setsansfont{Messina Sans}
+}{}
+
+\ifdefstring{\vibe}{orthographic}{%
+  % Orthographic vibe: FS Ostro, Native, Messina Sans
+  \setmainfont{FS Ostro}
+  \setmonofont{Native}[Scale=0.8]
+  \setsansfont{Messina Sans}
+}{}
+
+\ifdefstring{\vibe}{artistic}{%
+  % Artistic vibe: Adobe Jenson Pro, Monograf, Messina Sans
+  \setmainfont{Adobe Jenson Pro}
+  \setmonofont{Basis Grotesque Mono Pro}[Scale=0.7]
+  \setsansfont{Messina Sans}
 }{}
 
 \ifdefstring{\vibe}{playful}{%

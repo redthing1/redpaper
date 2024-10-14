@@ -3,6 +3,7 @@ title: "Cryptographic Algorithms and Techniques: A Typographical Showcase"
 author: Claude 3.5 Sonnet
 date: 2024-10-13
 fontsize: 10pt
+vibe: classic
 ---
 
 # Symmetric Encryption Algorithms
@@ -401,6 +402,22 @@ Lattice-based schemes rely on the hardness of lattice problems, such as the Shor
 $$ A \in \mathbb{Z}_q^{m \times n}, \quad s \in \mathbb{Z}_q^n, \quad e \in \mathbb{Z}_q^m $$
 
 The LWE problem involves solving for $s$ given pairs $(A, b)$ where $b = A s + e \mod q$, and $e$ is an error vector with small entries.
+
+# Security Advisories
+
+In the field of cryptography, it's crucial to stay informed about the latest security advisories and warnings. These often highlight vulnerabilities in existing systems or provide guidance on best practices.
+
+<div class="sans-serif">
+
+**SECURITY ALERT:** Recent developments in quantum computing have raised concerns about the long-term security of RSA and ECC. Cryptographers recommend preparing for the transition to post-quantum cryptographic algorithms.
+
+**BEST PRACTICE:** Always use up-to-date, professionally audited cryptographic libraries. Avoid implementing cryptographic algorithms from scratch unless you are an expert in the field.
+
+**VULNERABILITY NOTICE:** A critical vulnerability has been discovered in the implementation of SHA-1. It is strongly recommended to migrate to SHA-2 or SHA-3 for all cryptographic hash functions.
+
+</div>
+
+These advisories underscore the importance of staying vigilant and adaptable in the ever-evolving landscape of cryptography and information security.
 
 # Conclusion
 

@@ -1,29 +1,62 @@
 #!/bin/bash
 
-# Usage: ./install_font.sh <font_name> <url> [mode]
-# mode: ctan (default) or raw
+# Usage: ./install_font.sh <mode> <font_name> <SOURCE_RES>
+# mode: ctan, zip, or dir
 
 set -e
 
-FONT_NAME=$1
-URL=$2
-MODE=${3:-ctan}
+if [ $# -lt 3 ]; then
+    echo "Usage: $0 <mode> <font_name> <SOURCE_RES>"
+    echo "mode: ctan, zip, or dir"
+    exit 1
+fi
+
+MODE=$1
+FONT_NAME=$2
+SOURCE_RES=$3
 
 TEMP_DIR=$(mktemp -d)
-cd "$TEMP_DIR"
 
-wget "$URL"
-ZIP_FILE=$(ls *.zip)
+install_font_files() {
+    local src_dir=$1
+    local ttf_count=$(find "$src_dir" -type f -name "*.ttf" | wc -l)
+    local otf_count=$(find "$src_dir" -type f -name "*.otf" | wc -l)
 
-if [ "$MODE" = "raw" ]; then
-    mkdir -p /usr/share/fonts/truetype/$FONT_NAME
-    unzip "$ZIP_FILE" -d /usr/share/fonts/truetype/$FONT_NAME
-else
+    if [ $ttf_count -gt 0 ]; then
+        mkdir -p "/usr/share/fonts/truetype/$FONT_NAME"
+        find "$src_dir" -type f -name "*.ttf" -exec cp {} "/usr/share/fonts/truetype/$FONT_NAME" \;
+        echo "TrueType fonts installed to /usr/share/fonts/truetype/$FONT_NAME"
+    fi
+
+    if [ $otf_count -gt 0 ]; then
+        mkdir -p "/usr/share/fonts/opentype/$FONT_NAME"
+        find "$src_dir" -type f -name "*.otf" -exec cp {} "/usr/share/fonts/opentype/$FONT_NAME" \;
+        echo "OpenType fonts installed to /usr/share/fonts/opentype/$FONT_NAME"
+    fi
+
+    if [ $ttf_count -eq 0 ] && [ $otf_count -eq 0 ]; then
+        echo "No TrueType or OpenType fonts found in the source."
+    fi
+}
+
+if [ "$MODE" = "zip" ]; then
+    cd "$TEMP_DIR"
+    wget "$SOURCE_RES"
+    unzip *.zip
+    install_font_files "$TEMP_DIR"
+elif [ "$MODE" = "dir" ]; then
+    if [ ! -d "$SOURCE_RES" ]; then
+        echo "Error: Specified directory does not exist."
+        exit 1
+    fi
+    install_font_files "$SOURCE_RES"
+elif [ "$MODE" = "ctan" ]; then
     mkdir -p ~/texmf/fonts/opentype/$FONT_NAME ~/texmf/tex/latex/$FONT_NAME
-    unzip "$ZIP_FILE"
+    cd "$TEMP_DIR"
+    wget "$SOURCE_RES"
+    unzip *.zip
     cp -R $FONT_NAME/opentype/* ~/texmf/fonts/opentype/$FONT_NAME/ 2>/dev/null || true
     
-    # Check for /latex subfolder first, then fallback to /tex
     if [ -d "$FONT_NAME/latex" ]; then
         cp -R $FONT_NAME/latex/* ~/texmf/tex/latex/$FONT_NAME/ 2>/dev/null || true
     elif [ -d "$FONT_NAME/tex" ]; then
@@ -31,6 +64,9 @@ else
     else
         echo "Warning: Neither /latex nor /tex subfolder found."
     fi
+else
+    echo "Error: Invalid mode. Use 'ctan', 'zip', or 'dir'."
+    exit 1
 fi
 
 fc-cache -f

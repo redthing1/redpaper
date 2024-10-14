@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Queue Mono';
+    src: url('QueueMono-Thin.eot');
+    src: local('Queue Mono Thin'), local('QueueMono-Thin'),
+        url('QueueMono-Thin.eot?#iefix') format('embedded-opentype'),
+        url('QueueMono-Thin.woff2') format('woff2'),
+        url('QueueMono-Thin.woff') format('woff'),
+        url('QueueMono-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Queue Mono';
+    src: url('QueueMono-Bold.eot');
+    src: local('Queue Mono Bold'), local('QueueMono-Bold'),
+        url('QueueMono-Bold.eot?#iefix') format('embedded-opentype'),
+        url('QueueMono-Bold.woff2') format('woff2'),
+        url('QueueMono-Bold.woff') format('woff'),
+        url('QueueMono-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Queue Mono';
+    src: url('QueueMono-Medium.eot');
+    src: local('Queue Mono Medium'), local('QueueMono-Medium'),
+        url('QueueMono-Medium.eot?#iefix') format('embedded-opentype'),
+        url('QueueMono-Medium.woff2') format('woff2'),
+        url('QueueMono-Medium.woff') format('woff'),
+        url('QueueMono-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Queue Mono';
+    src: url('QueueMono-Light.eot');
+    src: local('Queue Mono Light'), local('QueueMono-Light'),
+        url('QueueMono-Light.eot?#iefix') format('embedded-opentype'),
+        url('QueueMono-Light.woff2') format('woff2'),
+        url('QueueMono-Light.woff') format('woff'),
+        url('QueueMono-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Queue Mono';
+    src: url('QueueMono-Book.eot');
+    src: local('Queue Mono Book'), local('QueueMono-Book'),
+        url('QueueMono-Book.eot?#iefix') format('embedded-opentype'),
+        url('QueueMono-Book.woff2') format('woff2'),
+        url('QueueMono-Book.woff') format('woff'),
+        url('QueueMono-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

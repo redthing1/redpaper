@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Monograf Text';
+    src: url('MonografTextBold.eot');
+    src: local('Monograf Text Bold'), local('MonografTextBold'),
+        url('MonografTextBold.eot?#iefix') format('embedded-opentype'),
+        url('MonografTextBold.woff2') format('woff2'),
+        url('MonografTextBold.woff') format('woff'),
+        url('MonografTextBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Monograf';
+    src: url('MonografRegular.eot');
+    src: local('Monograf Regular'), local('MonografRegular'),
+        url('MonografRegular.eot?#iefix') format('embedded-opentype'),
+        url('MonografRegular.woff2') format('woff2'),
+        url('MonografRegular.woff') format('woff'),
+        url('MonografRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Monograf';
+    src: url('MonografBold.eot');
+    src: local('Monograf Bold'), local('MonografBold'),
+        url('MonografBold.eot?#iefix') format('embedded-opentype'),
+        url('MonografBold.woff2') format('woff2'),
+        url('MonografBold.woff') format('woff'),
+        url('MonografBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Monograf Text';
+    src: url('MonografTextRegular.eot');
+    src: local('Monograf Text Regular'), local('MonografTextRegular'),
+        url('MonografTextRegular.eot?#iefix') format('embedded-opentype'),
+        url('MonografTextRegular.woff2') format('woff2'),
+        url('MonografTextRegular.woff') format('woff'),
+        url('MonografTextRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

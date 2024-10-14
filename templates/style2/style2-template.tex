@@ -170,13 +170,45 @@
 % % and let's use Fira Sans for the sans-serif font
 % \setsansfont{Fira Sans}
 
-% new theme: Alegreya, Iosevka, Fira Sans
+% % new theme: Alegreya, Iosevka, Fira Sans
+% \usepackage[T1]{fontenc}
+% \usepackage{Alegreya}
+% \setmainfont{Alegreya}
+% % \setmonofont{Iosevka Slab}
+% \setmonofont{Iosevka Slab}[Scale=MatchLowercase]
+% \setsansfont{Fira Sans}
+
+% Font selection based on $vibe$
+\usepackage{etoolbox}
 \usepackage[T1]{fontenc}
-\usepackage{Alegreya}
-\setmainfont{Alegreya}
-% \setmonofont{Iosevka Slab}
-\setmonofont{Iosevka Slab}[Scale=MatchLowercase]
-\setsansfont{Fira Sans}
+
+% Set default vibe to classic if not specified
+$if(vibe)$
+\def\vibe{$vibe$}
+$else$
+\def\vibe{classic}
+$endif$
+
+% Font selection based on vibe
+\ifdefstring{\vibe}{classic}{%
+  % Classic vibe: Alegreya, Iosevka, Fira Sans
+  \setmainfont{Alegreya}
+  \setmonofont{Iosevka Slab}[Scale=MatchLowercase]
+  \setsansfont{Fira Sans}
+}{}
+
+\ifdefstring{\vibe}{alternate}{%
+  \setmainfont{ebgaramond}
+  \setmonofont{inconsolata}
+  \setsansfont{Fira Sans}
+}{}
+
+\ifdefstring{\vibe}{playful}{%
+  % Playful vibe: Comic Neue, Courier Prime, Quicksand
+  \setmainfont{Comic Neue}
+  \setmonofont{Courier Prime}[Scale=MatchLowercase]
+  \setsansfont{Quicksand}
+}{}
 
 % other cool monospace fonts
 % \setmonofont{inconsolata}

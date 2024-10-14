@@ -211,6 +211,13 @@ $endif$
   \setsansfont{Messina Sans}
 }{}
 
+\ifdefstring{\vibe}{professional}{%
+  % Professional vibe: Palatino, Source Code Pro, Helvetica
+  \setmainfont{Palatino Nova}
+  \setmonofont{Source Code Pro}[Scale=0.7]
+  \setsansfont{Helvetica Now Text}
+}{}
+
 \ifdefstring{\vibe}{orthographic}{%
   % Orthographic vibe: FS Ostro, Native, Messina Sans
   \setmainfont{FS Ostro}

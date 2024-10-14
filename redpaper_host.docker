@@ -45,6 +45,9 @@ RUN \
   install_font.sh dir monograf ./fonts/Monograf && \
   install_font.sh dir queue ./fonts/QueueMono && \
   install_font.sh dir basis-grotesque-mono ./fonts/BasisGrotesqueMonoPro && \
+  install_font.sh dir palatino-nova ./fonts/PalatinoNova && \
+  install_font.sh dir source-code-pro ./fonts/SourceCodePro && \
+  install_font.sh dir helvetica-now-text ./fonts/HelveticaNowText && \
   install_font.sh ctan fira https://mirrors.ctan.org/fonts/fira.zip
 
 # install latex packages

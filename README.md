@@ -12,6 +12,7 @@ vibes:
 + `alternate`
 + `forward`
 + `orthographic`
++ `professional`
 + `artistic`
 
 <img src="./media/crypto_showcase_style2-1.png" width="400"/>

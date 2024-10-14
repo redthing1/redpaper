@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-BoldItalic.eot');
+    src: local('Austera Text Bold Italic'), local('AusteraText-BoldItalic'),
+        url('AusteraText-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-BoldItalic.woff2') format('woff2'),
+        url('AusteraText-BoldItalic.woff') format('woff'),
+        url('AusteraText-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-ExtraLightItalic.eot');
+    src: local('Austera Text ExtraLight Italic'), local('AusteraText-ExtraLightItalic'),
+        url('AusteraText-ExtraLightItalic.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-ExtraLightItalic.woff2') format('woff2'),
+        url('AusteraText-ExtraLightItalic.woff') format('woff'),
+        url('AusteraText-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-Regular.eot');
+    src: local('Austera Text Regular'), local('AusteraText-Regular'),
+        url('AusteraText-Regular.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-Regular.woff2') format('woff2'),
+        url('AusteraText-Regular.woff') format('woff'),
+        url('AusteraText-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-LightItalic.eot');
+    src: local('Austera Text Light Italic'), local('AusteraText-LightItalic'),
+        url('AusteraText-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-LightItalic.woff2') format('woff2'),
+        url('AusteraText-LightItalic.woff') format('woff'),
+        url('AusteraText-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-DemiBold.eot');
+    src: local('Austera Text DemiBold'), local('AusteraText-DemiBold'),
+        url('AusteraText-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-DemiBold.woff2') format('woff2'),
+        url('AusteraText-DemiBold.woff') format('woff'),
+        url('AusteraText-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-Medium.eot');
+    src: local('Austera Text Medium'), local('AusteraText-Medium'),
+        url('AusteraText-Medium.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-Medium.woff2') format('woff2'),
+        url('AusteraText-Medium.woff') format('woff'),
+        url('AusteraText-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-MediumItalic.eot');
+    src: local('Austera Text Medium Italic'), local('AusteraText-MediumItalic'),
+        url('AusteraText-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-MediumItalic.woff2') format('woff2'),
+        url('AusteraText-MediumItalic.woff') format('woff'),
+        url('AusteraText-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-Bold.eot');
+    src: local('Austera Text Bold'), local('AusteraText-Bold'),
+        url('AusteraText-Bold.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-Bold.woff2') format('woff2'),
+        url('AusteraText-Bold.woff') format('woff'),
+        url('AusteraText-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-Light.eot');
+    src: local('Austera Text Light'), local('AusteraText-Light'),
+        url('AusteraText-Light.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-Light.woff2') format('woff2'),
+        url('AusteraText-Light.woff') format('woff'),
+        url('AusteraText-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-Italic.eot');
+    src: local('Austera Text Italic'), local('AusteraText-Italic'),
+        url('AusteraText-Italic.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-Italic.woff2') format('woff2'),
+        url('AusteraText-Italic.woff') format('woff'),
+        url('AusteraText-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-DemiBoldItalic.eot');
+    src: local('Austera Text DemiBold Italic'), local('AusteraText-DemiBoldItalic'),
+        url('AusteraText-DemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-DemiBoldItalic.woff2') format('woff2'),
+        url('AusteraText-DemiBoldItalic.woff') format('woff'),
+        url('AusteraText-DemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Austera Text';
+    src: url('AusteraText-ExtraLight.eot');
+    src: local('Austera Text ExtraLight'), local('AusteraText-ExtraLight'),
+        url('AusteraText-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('AusteraText-ExtraLight.woff2') format('woff2'),
+        url('AusteraText-ExtraLight.woff') format('woff'),
+        url('AusteraText-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+

@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'Native';
+    src: url('Native-Italic.eot');
+    src: local('Native Italic'), local('Native-Italic'),
+        url('Native-Italic.eot?#iefix') format('embedded-opentype'),
+        url('Native-Italic.woff2') format('woff2'),
+        url('Native-Italic.woff') format('woff'),
+        url('Native-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Native';
+    src: url('Native-Regular.eot');
+    src: local('Native Regular'), local('Native-Regular'),
+        url('Native-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Native-Regular.woff2') format('woff2'),
+        url('Native-Regular.woff') format('woff'),
+        url('Native-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Native';
+    src: url('Native-BoldItalic.eot');
+    src: local('Native Bold Italic'), local('Native-BoldItalic'),
+        url('Native-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Native-BoldItalic.woff2') format('woff2'),
+        url('Native-BoldItalic.woff') format('woff'),
+        url('Native-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Native';
+    src: url('Native-LightItalic.eot');
+    src: local('Native Light Italic'), local('Native-LightItalic'),
+        url('Native-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('Native-LightItalic.woff2') format('woff2'),
+        url('Native-LightItalic.woff') format('woff'),
+        url('Native-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Native';
+    src: url('Native-Light.eot');
+    src: local('Native Light'), local('Native-Light'),
+        url('Native-Light.eot?#iefix') format('embedded-opentype'),
+        url('Native-Light.woff2') format('woff2'),
+        url('Native-Light.woff') format('woff'),
+        url('Native-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Native';
+    src: url('Native-Bold.eot');
+    src: local('Native Bold'), local('Native-Bold'),
+        url('Native-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Native-Bold.woff2') format('woff2'),
+        url('Native-Bold.woff') format('woff'),
+        url('Native-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+

@@ -108,6 +108,9 @@
 % Pandoc imports the extensive `amsmath` collection of symbols 
 % for typesetting ordinary math.  
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
 % if you use exotic symbols you need to import specific packages, eg. for
 % electrical engineering diagrams, musical notation, exotic currency symbols,
 % the unspeakable rites of freemasonry etc.
@@ -423,10 +426,6 @@ $endfor$
 
 % pandoc common.tex
 $common.tex()$
-
-% other includes
-% for mathbb
-\usepackage{amsfonts}
 
 % Title, authors, date.
 % If you specified title authors and date at the start of 

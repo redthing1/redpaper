@@ -44,6 +44,7 @@ RUN \
   install_font.sh dir messina-sans /tmp/fonts/MessinaSans && \
   install_font.sh dir native-mono /tmp/fonts/NativeMono && \
   install_font.sh dir jenson-pro /tmp/fonts/AdobeJensonPro && \
+  install_font.sh dir fs-ostro /tmp/fonts/FSOstro && \
   install_font.sh dir monograf /tmp/fonts/Monograf && \
   install_font.sh dir queue /tmp/fonts/QueueMono && \
   install_font.sh dir basis-grotesque-mono /tmp/fonts/BasisGrotesqueMonoPro && \

@@ -38,5 +38,5 @@ podman run --rm -it -v $(pwd):/prj -v $(pwd):/data redthing1/redpaper_host
 
 render some examples (within container shell):
 ```sh
-pandoc --dpi=300 --pdf-engine=lualatex --template /data/templates/style2/style2-template.tex -i ./examples/crypto_showcase.md -o ./examples/crypto_showcase_style2.pdf
+pandoc --dpi=300 --pdf-engine=lualatex --template /data/templates/style2/style2-single.tex -i ./examples/crypto_showcase.md -o ./examples/crypto_showcase_style2.pdf
 ```

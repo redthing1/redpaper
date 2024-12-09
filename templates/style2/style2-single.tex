@@ -1,58 +1,73 @@
-% select base font size based on pandoc variable $fontsize$
+% style2-single.tex - simple single-column layout based on scrartcl
+% designed for general-purpose documents with clean typography
+% uses koma-script for modern latex features
+
+% select base document font size from pandoc variable, defaulting to 12pt if not specified
+% scrartcl provides a more modern base than standard article class with better defaults
 \documentclass[$if(fontsize)$$fontsize$$else$12pt$endif$]{scrartcl}
 
-% load core functionality
+% import core template functionality that provides font handling, math support, etc
 $core.tex()$
 
-% margins and page geometry
+% configure page layout and margins
 \usepackage{geometry}
+% verbose enables helpful warnings
+% letterpaper sets US letter size (8.5x11 inches)
+% all margins set to 1 inch for traditional academic style
 \geometry{verbose,letterpaper,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
 
-% page style (just numbers)
+% set page style to just show page numbers without headers
+% plain is the simplest built-in style
 \pagestyle{plain}
 
-% --- section numbering ---
-% control section numbering depth based on pandoc variable
-% secnumdepth: 0 = no numbering, 1 = sections, 2 = subsections, etc.
+% --- section numbering configuration ---
+% controls how deep section numbering goes in the hierarchy
+% secnumdepth values:
+% 0 = no numbers anywhere
+% 1 = number sections only
+% 2 = number sections and subsections (used if numbersections is true)
 $if(numbersections)$
-  % if numbersections is true in pandoc metadata/options
+  % enable section numbering through subsection level when requested
   \setcounter{secnumdepth}{2}  % number sections and subsections
 $else$
+  % disable all section numbering when not requested
   \setcounter{secnumdepth}{0}  % no numbering
 $endif$
 
-% title info
+% set up title block information if provided in metadata
 $if(title)$
 \title{$title$}
 $endif$
+% handle multiple authors with separators
 \author{$for(author)$$author$$sep$\\$endfor$}
+% include date if specified
 $if(date)$
 \date{$date$}
 $endif$
 
-% start the document
+% begin the actual document content
 \begin{document}
 
-% title
+% generate title block if title was provided
 $if(title)$
 \maketitle
 $endif$
 
-% table of contents
+% include table of contents if requested
 $if(toc)$
 \tableofcontents
 
 $endif$
 
-% alignment
+% handle text alignment if specified
 $if(alignment)$
 \begin{$alignment$}
 $endif$
 
-% content
+% insert main document content
 $body$
 
-% end alignment
+% close alignment environment if it was opened
 $if(alignment)$
 \end{$alignment$}
 $endif$

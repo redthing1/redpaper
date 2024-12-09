@@ -1,162 +1,223 @@
-% a pandoc.latex template inspired by: https://gist.github.com/michaelt/1017790
-% https://tex.stackexchange.com/questions/88793/using-koma-scripts-scrartcl-class-as-an-american-academic-suggested-changes
-% note that lualatex can be really slow the first time the font is used
+% core.tex - foundational template for latex document styling
+% provides base configuration for fonts, math, languages, and typography
+% designed to be imported by other style templates
 
-% core packages for fonts and language support
+% --- core font and language packages ---
+% fontspec provides modern font handling for xetex/luatex engines
 \usepackage{fontspec}
 
-% engine specific packages
+% --- engine-specific configuration ---
+% conditional loading of packages based on tex engine in use
 \usepackage{ifxetex,ifluatex}
-% xetex specific packages
+
+% xetex-specific additions
 \ifxetex
+  % xltxtra provides extra features for xetex
+  % xunicode ensures proper unicode handling
   \usepackage{xltxtra,xunicode}
 \fi
-% luatex specific packages
+
+% luatex-specific additions
 \ifluatex
+  % extra features and fixes for luatex
   \usepackage{luatextra}
 \fi
 
-% math symbols
+% --- mathematical support ---
+% amsmath for advanced math formatting and environments
 \usepackage{amsmath}
+% amssymb for additional mathematical symbols
 \usepackage{amssymb}
+% amsfonts for specialized math fonts
 \usepackage{amsfonts}
 
-% language support
+% --- language configuration ---
+% babel with english provides proper hyphenation and language-specific formatting
 \usepackage[english]{babel}
 
-% font selection system
+% --- advanced typography tools ---
+% etoolbox provides programming tools for latex
 \usepackage{etoolbox}
+% fontenc sets up proper font encoding for output
 \usepackage[T1]{fontenc}
 
-% set default vibe to classic if not specified
+% --- document style (vibe) configuration ---
+% set default style to classic if not specified
 $if(vibe)$
 \def\vibe{$vibe$}
 $else$
 \def\vibe{classic}
 $endif$
 
-% font selection based on vibe
+% --- font combinations for different vibes ---
+% each vibe defines a specific combination of serif, monospace, and sans-serif fonts
+% for a cohesive visual style
+
+% classic vibe: traditional academic style
 \ifdefstring{\vibe}{classic}{%
-  % classic vibe: alegreya, iosevka, fira sans
+  % alegreya for main text - elegant serif with good readability
   \setmainfont{Alegreya}
+  % iosevka for code - clear monospace with good spacing
   \setmonofont{Iosevka}[Scale=0.8]
+  % fira sans for headlines - modern sans-serif
   \setsansfont{Fira Sans}
 }{}
 
+% alternate vibe: more contemporary feel
 \ifdefstring{\vibe}{alternate}{%
-  % alternate vibe: ebgaramond, inconsolata, fira sans
+  % ebgaramond for sophisticated main text
   \setmainfont{ebgaramond}
+  % inconsolata for clean code display
   \setmonofont{inconsolata}
+  % fira sans maintains modern headings
   \setsansfont{Fira Sans}
 }{}
 
+% forward vibe: modern and progressive
 \ifdefstring{\vibe}{forward}{%
-  % forward vibe: austera, native, messina sans
+  % austera text for contemporary body text
   \setmainfont{Austera Text}
+  % native for modern code presentation
   \setmonofont{Native}[Scale=0.8]
+  % messina sans for clean headlines
   \setsansfont{Messina Sans}
 }{}
 
+% professional vibe: business-oriented design
 \ifdefstring{\vibe}{professional}{%
-  % professional vibe: palatino, source code pro, helvetica
+  % palatino nova for classic professional text
   \setmainfont{Palatino Nova}
+  % source code pro for technical precision
   \setmonofont{Source Code Pro}[Scale=0.7]
+  % helvetica now for modern business feel
   \setsansfont{Helvetica Now Text}
 }{}
 
+% orthographic vibe: emphasis on readability
 \ifdefstring{\vibe}{orthographic}{%
-  % orthographic vibe: fs ostro, native, messina sans
+  % fs ostro for clear body text
   \setmainfont{FS Ostro}
+  % native for consistent code display
   \setmonofont{Native}[Scale=0.8]
+  % messina sans for balanced headlines
   \setsansfont{Messina Sans}
 }{}
 
+% artistic vibe: creative and elegant
 \ifdefstring{\vibe}{artistic}{%
-  % artistic vibe: adobe jenson pro, monograf, messina sans
+  % adobe jenson pro for classical elegance
   \setmainfont{Adobe Jenson Pro}
+  % basis grotesque mono for artistic code
   \setmonofont{Basis Grotesque Mono Pro}[Scale=0.7]
+  % messina sans for creative headlines
   \setsansfont{Messina Sans}
 }{}
 
+% playful vibe: casual and approachable
 \ifdefstring{\vibe}{playful}{%
-  % playful vibe: comic neue, courier prime, quicksand
+  % comic neue for friendly body text
   \setmainfont{Comic Neue}
+  % courier prime for casual code
   \setmonofont{Courier Prime}[Scale=MatchLowercase]
+  % quicksand for fun headlines
   \setsansfont{Quicksand}
 }{}
 
-% heading styles
+% --- heading styles configuration ---
+% consistent but minimal heading formatting
+% using rmfamily (serif) and mdseries (medium weight) for elegance
 \setkomafont{title}{\rmfamily\mdseries\upshape\normalsize}
 \setkomafont{sectioning}{\rmfamily\mdseries\upshape\normalsize}
 \setkomafont{descriptionlabel}{\rmfamily\mdseries\upshape\normalsize}
 \setkomafont{subsubsection}{\rmfamily\mdseries\upshape\normalsize\underline}
 
-% footnote formatting
+% --- footnote formatting ---
+% flush left margins for cleaner footnote appearance
 \usepackage[flushmargin]{footmisc-2011-06-06}
 
-% paragraph formatting
+% --- paragraph spacing ---
+% remove indentation for modern look
 \setlength{\parindent}{0pt}
+% set vertical space between paragraphs
+% plus/minus values allow tex to adjust spacing when needed
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 
-% fancy enums support
+% --- enumeration support ---
+% conditional setup for fancy enumeration if requested
 $if(fancy-enums)$
 \makeatletter\AtBeginDocument{%
+  % set consistent label width for lists
   \renewcommand{\@listi}
     {\setlength{\labelwidth}{4em}}
 }\makeatother
+% enable enhanced enumeration features
 \usepackage{enumerate}
 $endif$
 
-% table support
+% --- table support ---
 $if(tables)$
+% array package for advanced table features
 \usepackage{array}
+% commands to handle backslashes in tables
 \newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
 \let\PBS=\PreserveBackslash
 $endif$
 
-% subscript support
+% --- subscript support ---
 $if(subscript)$
+% command for properly formatted subscript text
 \newcommand{\textsubscr}[1]{\ensuremath{_{\scriptsize\textrm{#1}}}}
 $endif$
 
-% hyperlinks
+% --- hyperlink configuration ---
+% enable hyperlinks with customized appearance
 \usepackage[breaklinks=true]{hyperref}
 \hypersetup{colorlinks,%
 citecolor=blue,%
 filecolor=blue,%
 linkcolor=blue,%
 urlcolor=blue}
+
+% --- url handling ---
 $if(url)$
+% enable proper url formatting
 \usepackage{url}
 $endif$
 
-% graphics support
+% --- graphics support ---
 $if(graphics)$
 \usepackage{graphicx}
+% automatically scale images to fit page width
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
 \else\Gin@nat@width\fi}
 \makeatother
+% redefine includegraphics to use maxwidth by default
 \let\Oldincludegraphics\includegraphics
 \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
 $endif$
 
-% section numbering
+% --- section numbering ---
+% control section numbering depth
 $if(numbersections)$
 $else$
+% disable section numbering if not requested
 \setcounter{secnumdepth}{0}
 $endif$
 
-% verbatim in footnotes
+% --- verbatim in footnotes ---
 $if(verbatim-in-note)$
+% enable proper handling of verbatim text in footnotes
 \usepackage{fancyvrb}
 \VerbatimFootnotes
 $endif$
 
-% header includes
+% --- custom header includes ---
+% process any additional header code
 $for(header-includes)$
 $header-includes$
 $endfor$
 
-% include pandoc common template
+% --- include common template ---
+% load shared template configurations
 $common.tex()$

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./install_package.sh <package_name> <ctan_url>
+# usage: ./install_package.sh <package_name> <ctan_url>
 
 PACKAGE_NAME=$1
 CTAN_URL=$2
@@ -11,8 +11,15 @@ cd /tmp
 
 wget $CTAN_URL
 unzip $PACKAGE_NAME.zip
-cp $PACKAGE_NAME/*.sty ~/texmf/tex/latex/$PACKAGE_NAME/
+cd $PACKAGE_NAME
 
+# generate sty files from ins/dtx if needed
+[ -f *.ins ] && latex *.ins
+[ ! -f *.ins ] && [ -f *.dtx ] && latex *.dtx
+
+# copy and cleanup
+cp *.sty ~/texmf/tex/latex/$PACKAGE_NAME/
+cd ..
 rm -rf $PACKAGE_NAME*
 
 texhash ~/texmf

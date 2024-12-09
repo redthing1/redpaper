@@ -3,6 +3,7 @@ title: "Cryptographic Algorithms and Techniques: A Typographical Showcase"
 author: Claude 3.5 Sonnet
 date: 2024-10-13
 fontsize: 10pt
+numbersections: true
 ---
 
 # Symmetric Encryption Algorithms

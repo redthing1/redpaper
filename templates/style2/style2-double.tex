@@ -1,0 +1,161 @@
+% style2-double.tex - two-column layout template based on scrartcl
+% this template is designed for technical documentation with a compact yet readable layout
+
+% --- base configuration ---
+% scrartcl is from koma-script, more modern than standard article class
+% 10pt sets base font size, twocolumn enables two-column layout
+\documentclass[10pt, twocolumn]{scrartcl}
+
+% load core template functionality from core.tex
+$core.tex()$
+
+% --- page geometry ---
+% geometry package handles page layout and margins
+\usepackage{geometry}
+\geometry{
+  letterpaper,          % us letter size
+  tmargin=0.6in,        % top margin
+  bmargin=0.6in,        % bottom margin
+  lmargin=0.6in,        % left margin
+  rmargin=0.6in,        % right margin
+  columnsep=0.3in       % space between columns
+}
+
+% --- basic typography settings ---
+% parskip controls vertical space between paragraphs
+% the plus/minus values allow tex to stretch/shrink if needed
+\setlength{\parskip}{3pt plus 1pt minus 1pt}
+
+% parindent controls paragraph indentation (we disable it)
+\setlength{\parindent}{0pt}
+
+% baselineskip controls the basic line spacing
+% multiplying by 1.15 gives slightly looser spacing for readability
+\setlength{\baselineskip}{1.15\baselineskip}
+
+% --- title formatting ---
+% redefine the maketitle command to set proper title hierarchy
+% \makeatletter/\makeatother needed for commands with @ in their name
+\makeatletter
+\renewcommand{\@maketitle}{%
+  \newpage
+  % center environment for title block
+  \begin{center}%
+    % title: largest element in document
+    {\LARGE\bfseries \@title \par}%
+    \vskip 0.8em%           % vertical space after title
+    % author: large but not as large as title
+    {\large \@author \par}%
+    \vskip 0.5em%           % space before date
+    % date: normal size
+    {\normalsize \@date \par}%
+  \end{center}%
+  \par\vskip 1em%           % space after title block
+}
+\makeatother
+
+% --- section formatting ---
+% RedeclareSectionCommands is a koma-script command to style section headers
+% sections are main divisions of the document
+\RedeclareSectionCommands[
+  beforeskip=1.2em,         % space before section
+  afterskip=0.6em,          % space after section
+  font=\large\bfseries      % larger than normal, bold
+]{section}
+
+% subsections are subdivisions of sections
+\RedeclareSectionCommands[
+  beforeskip=0.8em,         % less space than sections
+  afterskip=0.4em,
+  font=\normalsize\bfseries % normal size but bold
+]{subsection}
+
+% subsubsections (rarely used but available)
+\RedeclareSectionCommands[
+  beforeskip=0.6em,
+  afterskip=0.3em,
+  font=\normalsize\itshape  % italics to distinguish
+]{subsubsection}
+
+% --- math spacing ---
+% these control spacing around displayed math equations
+\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}         % space above equations
+\setlength{\belowdisplayskip}{6pt plus 2pt minus 2pt}         % space below equations
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}    % for short equations
+\setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}    % for short equations
+
+% --- special section types ---
+% command for informal subsections (like "Formal Definition")
+\newcommand{\formaldefinition}{%
+  \vspace{0.3em}%                    % space above
+  {\noindent\itshape Formal Definition\par}%  % italics, no indent
+  \vspace{0.2em}%                    % space below
+}
+
+% command for other informal subsections
+\newcommand{\informalsubsection}[1]{%
+  \vspace{0.4em}%                    % space above
+  {\noindent\normalsize\bfseries #1\par}%  % bold, no indent
+  \vspace{0.2em}%                    % space below
+}
+
+% --- code blocks ---
+\usepackage{listings}                 % package for code listings
+\lstset{
+  basicstyle=\small\ttfamily,        % small monospace font
+  aboveskip=6pt,                     % space above code blocks
+  belowskip=6pt,                     % space below code blocks
+  xleftmargin=0pt,                   % no extra left margin
+  framexleftmargin=0pt,              % no frame margin
+  numbers=none,                      % no line numbers
+  frame=none                         % no frame
+}
+
+% support for wide figures
+\usepackage{stfloats}
+
+% better typography
+\usepackage{microtype}
+
+% column balancing
+\usepackage{balance}
+
+% --- section numbering ---
+% control section numbering depth based on pandoc variable
+% secnumdepth: 0 = no numbering, 1 = sections, 2 = subsections, etc.
+$if(numbersections)$
+  % if numbersections is true in pandoc metadata/options
+  \setcounter{secnumdepth}{2}  % number sections and subsections
+$else$
+  \setcounter{secnumdepth}{0}  % no numbering
+$endif$
+
+% title info
+$if(title)$
+\title{$title$}
+$endif$
+\author{$for(author)$$author$$sep$\\$endfor$}
+$if(date)$
+\date{$date$}
+$endif$
+
+% start the document
+\begin{document}
+
+% title
+$if(title)$
+\maketitle
+$endif$
+
+% table of contents if requested
+$if(toc)$
+\tableofcontents
+$endif$
+
+% content
+$body$
+
+% balance columns on last page
+\balance
+
+\end{document}

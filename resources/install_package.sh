@@ -14,8 +14,16 @@ unzip $PACKAGE_NAME.zip
 cd $PACKAGE_NAME
 
 # generate sty files from ins/dtx if needed
-[ -f *.ins ] && latex *.ins
-[ ! -f *.ins ] && [ -f *.dtx ] && latex *.dtx
+for ins in *.ins; do
+    [ -f "$ins" ] && latex "$ins"
+done
+
+# if no sty files generated, try dtx files
+if ! ls *.sty >/dev/null 2>&1; then
+    for dtx in *.dtx; do
+        [ -f "$dtx" ] && latex "$dtx"
+    done
+fi
 
 # copy and cleanup
 cp *.sty ~/texmf/tex/latex/$PACKAGE_NAME/

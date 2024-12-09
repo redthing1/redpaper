@@ -11,6 +11,16 @@ $core.tex()$
 % page style (just numbers)
 \pagestyle{plain}
 
+% --- section numbering ---
+% control section numbering depth based on pandoc variable
+% secnumdepth: 0 = no numbering, 1 = sections, 2 = subsections, etc.
+$if(numbersections)$
+  % if numbersections is true in pandoc metadata/options
+  \setcounter{secnumdepth}{2}  % number sections and subsections
+$else$
+  \setcounter{secnumdepth}{0}  % no numbering
+$endif$
+
 % title info
 $if(title)$
 \title{$title$}

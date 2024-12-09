@@ -57,6 +57,8 @@ RUN \
   install_package.sh footmisc https://mirrors.ctan.org/macros/latex/contrib/footmisc.zip && \
   install_package.sh ulem https://mirrors.ctan.org/macros/latex/contrib/ulem.zip && \
   install_package.sh sttools https://mirrors.ctan.org/macros/latex/contrib/sttools.zip && \
+  install_package.sh dblfloatfix https://mirrors.ctan.org/macros/latex/contrib/dblfloatfix.zip && \
+  install_package.sh preprint https://mirrors.ctan.org/macros/latex/contrib/preprint.zip && \
   rm -rf /tmp/*
 
 # pre-caching

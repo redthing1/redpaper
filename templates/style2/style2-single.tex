@@ -1,0 +1,50 @@
+% select base font size based on pandoc variable $fontsize$
+\documentclass[$if(fontsize)$$fontsize$$else$12pt$endif$]{scrartcl}
+
+% load core functionality
+$core.tex()$
+
+% margins and page geometry
+\usepackage{geometry}
+\geometry{verbose,letterpaper,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+
+% page style (just numbers)
+\pagestyle{plain}
+
+% title info
+$if(title)$
+\title{$title$}
+$endif$
+\author{$for(author)$$author$$sep$\\$endfor$}
+$if(date)$
+\date{$date$}
+$endif$
+
+% start the document
+\begin{document}
+
+% title
+$if(title)$
+\maketitle
+$endif$
+
+% table of contents
+$if(toc)$
+\tableofcontents
+
+$endif$
+
+% alignment
+$if(alignment)$
+\begin{$alignment$}
+$endif$
+
+% content
+$body$
+
+% end alignment
+$if(alignment)$
+\end{$alignment$}
+$endif$
+
+\end{document}

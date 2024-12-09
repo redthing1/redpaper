@@ -1,0 +1,162 @@
+% a pandoc.latex template inspired by: https://gist.github.com/michaelt/1017790
+% https://tex.stackexchange.com/questions/88793/using-koma-scripts-scrartcl-class-as-an-american-academic-suggested-changes
+% note that lualatex can be really slow the first time the font is used
+
+% core packages for fonts and language support
+\usepackage{fontspec}
+
+% engine specific packages
+\usepackage{ifxetex,ifluatex}
+% xetex specific packages
+\ifxetex
+  \usepackage{xltxtra,xunicode}
+\fi
+% luatex specific packages
+\ifluatex
+  \usepackage{luatextra}
+\fi
+
+% math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+% language support
+\usepackage[english]{babel}
+
+% font selection system
+\usepackage{etoolbox}
+\usepackage[T1]{fontenc}
+
+% set default vibe to classic if not specified
+$if(vibe)$
+\def\vibe{$vibe$}
+$else$
+\def\vibe{classic}
+$endif$
+
+% font selection based on vibe
+\ifdefstring{\vibe}{classic}{%
+  % classic vibe: alegreya, iosevka, fira sans
+  \setmainfont{Alegreya}
+  \setmonofont{Iosevka}[Scale=0.8]
+  \setsansfont{Fira Sans}
+}{}
+
+\ifdefstring{\vibe}{alternate}{%
+  % alternate vibe: ebgaramond, inconsolata, fira sans
+  \setmainfont{ebgaramond}
+  \setmonofont{inconsolata}
+  \setsansfont{Fira Sans}
+}{}
+
+\ifdefstring{\vibe}{forward}{%
+  % forward vibe: austera, native, messina sans
+  \setmainfont{Austera Text}
+  \setmonofont{Native}[Scale=0.8]
+  \setsansfont{Messina Sans}
+}{}
+
+\ifdefstring{\vibe}{professional}{%
+  % professional vibe: palatino, source code pro, helvetica
+  \setmainfont{Palatino Nova}
+  \setmonofont{Source Code Pro}[Scale=0.7]
+  \setsansfont{Helvetica Now Text}
+}{}
+
+\ifdefstring{\vibe}{orthographic}{%
+  % orthographic vibe: fs ostro, native, messina sans
+  \setmainfont{FS Ostro}
+  \setmonofont{Native}[Scale=0.8]
+  \setsansfont{Messina Sans}
+}{}
+
+\ifdefstring{\vibe}{artistic}{%
+  % artistic vibe: adobe jenson pro, monograf, messina sans
+  \setmainfont{Adobe Jenson Pro}
+  \setmonofont{Basis Grotesque Mono Pro}[Scale=0.7]
+  \setsansfont{Messina Sans}
+}{}
+
+\ifdefstring{\vibe}{playful}{%
+  % playful vibe: comic neue, courier prime, quicksand
+  \setmainfont{Comic Neue}
+  \setmonofont{Courier Prime}[Scale=MatchLowercase]
+  \setsansfont{Quicksand}
+}{}
+
+% heading styles
+\setkomafont{title}{\rmfamily\mdseries\upshape\normalsize}
+\setkomafont{sectioning}{\rmfamily\mdseries\upshape\normalsize}
+\setkomafont{descriptionlabel}{\rmfamily\mdseries\upshape\normalsize}
+\setkomafont{subsubsection}{\rmfamily\mdseries\upshape\normalsize\underline}
+
+% footnote formatting
+\usepackage[flushmargin]{footmisc-2011-06-06}
+
+% paragraph formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+% fancy enums support
+$if(fancy-enums)$
+\makeatletter\AtBeginDocument{%
+  \renewcommand{\@listi}
+    {\setlength{\labelwidth}{4em}}
+}\makeatother
+\usepackage{enumerate}
+$endif$
+
+% table support
+$if(tables)$
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\let\PBS=\PreserveBackslash
+$endif$
+
+% subscript support
+$if(subscript)$
+\newcommand{\textsubscr}[1]{\ensuremath{_{\scriptsize\textrm{#1}}}}
+$endif$
+
+% hyperlinks
+\usepackage[breaklinks=true]{hyperref}
+\hypersetup{colorlinks,%
+citecolor=blue,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue}
+$if(url)$
+\usepackage{url}
+$endif$
+
+% graphics support
+$if(graphics)$
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+\else\Gin@nat@width\fi}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
+$endif$
+
+% section numbering
+$if(numbersections)$
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+% verbatim in footnotes
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+\VerbatimFootnotes
+$endif$
+
+% header includes
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+% include pandoc common template
+$common.tex()$

@@ -37,6 +37,13 @@ podman run --rm -it -v $(pwd):/prj -v $(pwd):/data redthing1/redpaper_host
 ```
 
 render some examples (within container shell):
+
+style2, single column (comfortable) layout
 ```sh
 pandoc --dpi=300 --pdf-engine=lualatex --template /data/templates/style2/style2-single.tex -i ./examples/crypto_showcase.md -o ./examples/crypto_showcase_style2.pdf
+```
+
+style2, double column (paper-like) layout
+```sh
+pandoc --dpi=300 --pdf-engine=lualatex --template /data/templates/style2/style2-double.tex -i ./examples/crypto_showcase.md -o ./examples/crypto_showcase_style2_dbl.pdf
 ```

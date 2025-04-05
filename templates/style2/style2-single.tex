@@ -40,9 +40,11 @@ $if(title)$
 $endif$
 % handle multiple authors with separators
 \author{$for(author)$$author$$sep$\\$endfor$}
-% include date if specified
+% handle date: use empty date if none specified to prevent default current date
 $if(date)$
 \date{$date$}
+$else$
+\date{}
 $endif$
 
 % begin the actual document content

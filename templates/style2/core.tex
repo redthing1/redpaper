@@ -2,11 +2,11 @@
 % provides base configuration for fonts, math, languages, and typography
 % designed to be imported by other style templates
 
-% --- core font and language packages ---
+% --- CORE PACKAGES ---
 % fontspec provides modern font handling for xetex/luatex engines
 \usepackage{fontspec}
 
-% --- engine-specific configuration ---
+% --- ENGINE-SPECIFIC CONFIGURATION ---
 % conditional loading of packages based on tex engine in use
 \usepackage{ifxetex,ifluatex}
 
@@ -23,25 +23,151 @@
   \usepackage{luatextra}
 \fi
 
-% --- mathematical support ---
-% amsmath for advanced math formatting and environments
+% --- MATH AND SPECIAL CHARACTER HANDLING ---
 \usepackage{amsmath}
-% amssymb for additional mathematical symbols
 \usepackage{amssymb}
-% amsfonts for specialized math fonts
 \usepackage{amsfonts}
+\usepackage{mathtools}
 
-% --- language configuration ---
+\ifluatex
+  \usepackage{unicode-math}
+  \usepackage{luacode}
+  
+  \begin{luacode*}
+  function replace_math_chars(s)
+    -- Greek lowercase
+    s = unicode.utf8.gsub(s, "α", "\\ensuremath{\\alpha}")
+    s = unicode.utf8.gsub(s, "β", "\\ensuremath{\\beta}")
+    s = unicode.utf8.gsub(s, "γ", "\\ensuremath{\\gamma}")
+    s = unicode.utf8.gsub(s, "δ", "\\ensuremath{\\delta}")
+    s = unicode.utf8.gsub(s, "ε", "\\ensuremath{\\varepsilon}")
+    s = unicode.utf8.gsub(s, "η", "\\ensuremath{\\eta}")
+    s = unicode.utf8.gsub(s, "θ", "\\ensuremath{\\theta}")
+    s = unicode.utf8.gsub(s, "κ", "\\ensuremath{\\kappa}")
+    s = unicode.utf8.gsub(s, "λ", "\\ensuremath{\\lambda}")
+    s = unicode.utf8.gsub(s, "μ", "\\ensuremath{\\mu}")
+    s = unicode.utf8.gsub(s, "ρ", "\\ensuremath{\\rho}")
+    s = unicode.utf8.gsub(s, "σ", "\\ensuremath{\\sigma}")
+    s = unicode.utf8.gsub(s, "τ", "\\ensuremath{\\tau}")
+    s = unicode.utf8.gsub(s, "φ", "\\ensuremath{\\phi}")
+    s = unicode.utf8.gsub(s, "ω", "\\ensuremath{\\omega}")
+    
+    -- Greek uppercase
+    s = unicode.utf8.gsub(s, "Γ", "\\ensuremath{\\Gamma}")
+    s = unicode.utf8.gsub(s, "Δ", "\\ensuremath{\\Delta}")
+    s = unicode.utf8.gsub(s, "Σ", "\\ensuremath{\\Sigma}")
+    
+    -- Math symbols
+    s = unicode.utf8.gsub(s, "→", "\\ensuremath{\\rightarrow}")
+    s = unicode.utf8.gsub(s, "↔", "\\ensuremath{\\leftrightarrow}")
+    s = unicode.utf8.gsub(s, "⇌", "\\ensuremath{\\rightleftharpoons}")
+    s = unicode.utf8.gsub(s, "∇", "\\ensuremath{\\nabla}")
+    s = unicode.utf8.gsub(s, "∝", "\\ensuremath{\\propto}")
+    s = unicode.utf8.gsub(s, "⁺", "\\ensuremath{^{+}}")
+    s = unicode.utf8.gsub(s, "⁻", "\\ensuremath{^{-}}")
+    s = unicode.utf8.gsub(s, "₋", "\\ensuremath{_{-}}")
+    s = unicode.utf8.gsub(s, "₊", "\\ensuremath{_{+}}")
+    s = unicode.utf8.gsub(s, "ₐ", "\\ensuremath{_{a}}")
+    
+    -- Special symbols for BasisGrotesqueMonoPro
+    s = unicode.utf8.gsub(s, "⊑", "\\ensuremath{\\sqsubseteq}")
+    s = unicode.utf8.gsub(s, "⊓", "\\ensuremath{\\sqcap}")
+    s = unicode.utf8.gsub(s, "∃", "\\ensuremath{\\exists}")
+    
+    return s
+  end
+  \end{luacode*}
+  
+  % Register the callback to process the input
+  \AtBeginDocument{%
+    \directlua{
+      luatexbase.add_to_callback("process_input_buffer", 
+                                 replace_math_chars, 
+                                 "replace math chars with LaTeX commands")
+    }%
+  }
+  
+  % Set up the math font
+  \setmathfont{Latin Modern Math}
+\fi
+
+\ifxetex
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
+
+% --- SYMBOL AND CHARACTER SUPPORT ---
+% Symbol packages
+\usepackage{bbding}    % Various symbols
+\usepackage{pifont}    % Dingbats symbols
+\usepackage{textcomp}  % Additional text symbols
+
+% Box drawing character substitutions
+\usepackage{newunicodechar}
+
+% Define nicer symbols for box drawing characters
+\newunicodechar{─}{\textemdash\kern-0.1em\textemdash}
+\newunicodechar{│}{\textbar}
+\newunicodechar{┼}{\ding{59}}
+\newunicodechar{┘}{\ding{217}}
+\newunicodechar{└}{\ding{218}}
+\newunicodechar{┐}{\ding{216}}
+\newunicodechar{┌}{\ding{219}}
+
+% --- LANGUAGE CONFIGURATION ---
 % babel with english provides proper hyphenation and language-specific formatting
 \usepackage[english]{babel}
 
-% --- advanced typography tools ---
+% --- ADVANCED TYPOGRAPHY TOOLS ---
 % etoolbox provides programming tools for latex
 \usepackage{etoolbox}
 % fontenc sets up proper font encoding for output
 \usepackage[T1]{fontenc}
 
-% --- document style (vibe) configuration ---
+% Define universal fallback fonts (good Unicode coverage)
+\newfontfamily\primaryfallback{Latin Modern Roman}
+\newfontfamily\secondaryfallback{DejaVu Serif}
+
+% Register the fallback system with LuaTeX
+\directlua{
+  -- efficiently store font IDs to avoid repeated lookups
+  local fallback_ids = {}
+  local main_font_ids = {}
+  
+  -- high-performance character substitution
+  function substitute_missing_chars(head)
+    -- process the node list only once
+    for n in node.traverse_id(node.id("glyph"), head) do
+      local font_id = n.font
+      local char_id = n.char
+      
+      -- check if the current font has this character
+      if fonts.chars[font_id] and not fonts.chars[font_id][char_id] then
+        -- get fallback font ID (cached for performance)
+        if not fallback_ids[1] then
+          fallback_ids[1] = font.id("\string\primaryfallback")
+          fallback_ids[2] = font.id("\string\secondaryfallback")
+        end
+        
+        -- try primary fallback first
+        if fonts.chars[fallback_ids[1]] and fonts.chars[fallback_ids[1]][char_id] then
+          n.font = fallback_ids[1]
+        -- then secondary fallback
+        elseif fonts.chars[fallback_ids[2]] and fonts.chars[fallback_ids[2]][char_id] then
+          n.font = fallback_ids[2]
+        end
+      end
+    end
+    return head
+  end
+  
+  -- register callback with high priority
+  luatexbase.add_to_callback("pre_linebreak_filter", 
+                             substitute_missing_chars, 
+                             "universal font fallback system")
+}
+
+% --- DOCUMENT STYLE (VIBE) CONFIGURATION ---
 % set default style to classic if not specified
 $if(vibe)$
 \def\vibe{$vibe$}
@@ -49,7 +175,7 @@ $else$
 \def\vibe{classic}
 $endif$
 
-% --- font combinations for different vibes ---
+% --- FONT COMBINATIONS FOR DIFFERENT VIBES ---
 % each vibe defines a specific combination of serif, monospace, and sans-serif fonts
 % for a cohesive visual style
 
@@ -111,6 +237,18 @@ $endif$
   \setmonofont{Basis Grotesque Mono Pro}[Scale=0.7]
   % messina sans for creative headlines
   \setsansfont{Messina Sans}
+  
+  % --- DEDICATED MATH FONT FOR ARTISTIC VIBE ---
+  % Set up Latin Modern Math for all mathematical content
+  % This ensures Greek letters and math symbols display correctly
+  % while maintaining Adobe Jenson Pro for regular text
+  \setmathfont{Latin Modern Math}
+  
+  % Configure specific ranges to ensure complete coverage
+  \setmathfont[range=\mathup/{latin,Latin,greek,Greek,num,symbols}]{Latin Modern Math}
+  \setmathfont[range=\mathbfup/{latin,Latin,greek,Greek}]{Latin Modern Math}
+  \setmathfont[range=\mathit/{latin,Latin,greek,Greek}]{Latin Modern Math}
+  \setmathfont[range=\mathbfit/{latin,Latin,greek,Greek}]{Latin Modern Math}
 }{}
 
 % playful vibe: casual and approachable
@@ -123,7 +261,7 @@ $endif$
   \setsansfont{Quicksand}
 }{}
 
-% --- heading styles configuration ---
+% --- HEADING STYLES CONFIGURATION ---
 % consistent but minimal heading formatting
 % using rmfamily (serif) and mdseries (medium weight) for elegance
 \setkomafont{title}{\rmfamily\mdseries\upshape\normalsize}
@@ -131,18 +269,18 @@ $endif$
 \setkomafont{descriptionlabel}{\rmfamily\mdseries\upshape\normalsize}
 \setkomafont{subsubsection}{\rmfamily\mdseries\upshape\normalsize\underline}
 
-% --- footnote formatting ---
+% --- FOOTNOTE FORMATTING ---
 % flush left margins for cleaner footnote appearance
 \usepackage[flushmargin]{footmisc-2011-06-06}
 
-% --- paragraph spacing ---
+% --- PARAGRAPH SPACING ---
 % remove indentation for modern look
 \setlength{\parindent}{0pt}
 % set vertical space between paragraphs
 % plus/minus values allow tex to adjust spacing when needed
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 
-% --- enumeration support ---
+% --- ENUMERATION SUPPORT ---
 % conditional setup for fancy enumeration if requested
 $if(fancy-enums)$
 \makeatletter\AtBeginDocument{%
@@ -154,7 +292,7 @@ $if(fancy-enums)$
 \usepackage{enumerate}
 $endif$
 
-% --- table support ---
+% --- TABLE SUPPORT ---
 $if(tables)$
 % array package for advanced table features
 \usepackage{array}
@@ -163,13 +301,13 @@ $if(tables)$
 \let\PBS=\PreserveBackslash
 $endif$
 
-% --- subscript support ---
+% --- SUBSCRIPT SUPPORT ---
 $if(subscript)$
 % command for properly formatted subscript text
 \newcommand{\textsubscr}[1]{\ensuremath{_{\scriptsize\textrm{#1}}}}
 $endif$
 
-% --- hyperlink configuration ---
+% --- HYPERLINK CONFIGURATION ---
 % enable hyperlinks with customized appearance
 \usepackage[breaklinks=true]{hyperref}
 \hypersetup{colorlinks,%
@@ -178,13 +316,13 @@ filecolor=blue,%
 linkcolor=blue,%
 urlcolor=blue}
 
-% --- url handling ---
+% --- URL HANDLING ---
 $if(url)$
 % enable proper url formatting
 \usepackage{url}
 $endif$
 
-% --- graphics support ---
+% --- GRAPHICS SUPPORT ---
 $if(graphics)$
 \usepackage{graphicx}
 % automatically scale images to fit page width
@@ -197,7 +335,7 @@ $if(graphics)$
 \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
 $endif$
 
-% --- section numbering ---
+% --- SECTION NUMBERING ---
 % control section numbering depth
 $if(numbersections)$
 $else$
@@ -205,19 +343,19 @@ $else$
 \setcounter{secnumdepth}{0}
 $endif$
 
-% --- verbatim in footnotes ---
+% --- VERBATIM IN FOOTNOTES ---
 $if(verbatim-in-note)$
 % enable proper handling of verbatim text in footnotes
 \usepackage{fancyvrb}
 \VerbatimFootnotes
 $endif$
 
-% --- custom header includes ---
+% --- CUSTOM HEADER INCLUDES ---
 % process any additional header code
 $for(header-includes)$
 $header-includes$
 $endfor$
 
-% --- include common template ---
+% --- INCLUDE COMMON TEMPLATE ---
 % load shared template configurations
 $common.tex()$

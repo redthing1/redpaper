@@ -60,6 +60,10 @@ RUN \
   install_package.sh sttools https://mirrors.ctan.org/macros/latex/contrib/sttools.zip && \
   install_package.sh dblfloatfix https://mirrors.ctan.org/macros/latex/contrib/dblfloatfix.zip && \
   install_package.sh preprint https://mirrors.ctan.org/macros/latex/contrib/preprint.zip && \
+  install_package.sh bbding https://mirrors.ctan.org/fonts/bbding.zip && \
+  install_package.sh ts1 https://mirrors.ctan.org/obsolete/fonts/psfonts/ts1.zip && \
+  install_package.sh psnfss https://mirrors.ctan.org/macros/latex/required/psnfss.zip && \
+  install_package.sh newunicodechar https://mirrors.ctan.org/macros/latex/contrib/newunicodechar.zip && \
   rm -rf /tmp/*
 
 # pre-caching

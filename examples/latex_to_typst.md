@@ -1,7 +1,7 @@
 ---
 title: "Migrating from LaTeX to Typst"
 subtitle: "A Beautiful Typography Journey"
-author: ["Redpaper Team"]
+author: "Redpaper Team"
 date: "May 2025"
 abstract: |
   This document demonstrates the successful migration from LaTeX-based document 

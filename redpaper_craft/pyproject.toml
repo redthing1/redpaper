@@ -1,0 +1,20 @@
+[project]
+name = "redpaper-craft"
+version = "0.1.0"
+description = "CLI tool for running redpaper in a container"
+authors = [
+    {name = "User"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "typer (>=0.15.2,<0.16.0)",
+    "rich (>=14.0.0,<15.0.0)"
+]
+
+[project.scripts]
+redpaper = "redpaper_craft.cli:app"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

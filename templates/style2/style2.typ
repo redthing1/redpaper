@@ -39,21 +39,6 @@ $endif$
       sans: "Fira Sans",
       mono: "Inconsolata",
     ),
-    forward: (
-      serif: "Austera Text",
-      sans: "Messina Sans",
-      mono: "Native",
-    ),
-    professional: (
-      serif: "Palatino Nova",
-      sans: "Helvetica Now Text",
-      mono: "Source Code Pro",
-    ),
-    orthographic: (
-      serif: "FS Ostro",
-      sans: "Messina Sans", 
-      mono: "Native",
-    ),
     artistic: (
       serif: "Adobe Jenson Pro",
       sans: "Messina Sans",
@@ -70,12 +55,29 @@ $endif$
   )
   
   let base-font-size = fontsize
-  let adjustments = (
-    font-size: base-font-size,
-    spacing: 1.4em, 
-    leading: 1em,
-    list-spacing: 0.8em,
+
+  // set adjustments based on vibe
+  let adjustment_config = (
+    classic: (
+      font-size: base-font-size,
+      spacing: 1em, 
+      leading: 0.8em,
+      list-spacing: 0.8em,
+    ),
+    alternate: (
+      font-size: base-font-size * 0.95,
+      spacing: 1em, 
+      leading: 0.8em,
+      list-spacing: 0.8em,
+    ),
+    artistic: (
+      font-size: base-font-size * 0.9,
+      spacing: 1.4em, 
+      leading: 1em,
+      list-spacing: 1em,
+    ),
   )
+  let adjustments = adjustment_config.at(vibe, default: adjustment_config.classic)
   
   set text(
     font: fonts.serif,

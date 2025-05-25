@@ -1,6 +1,7 @@
 ---
-title: "Migrating from LaTeX to Typst: A Beautiful Typography Journey"
-author: ["Your Name", "Redpaper Team"]
+title: "Migrating from LaTeX to Typst"
+subtitle: "A Beautiful Typography Journey"
+author: ["Redpaper Team"]
 date: "May 2025"
 abstract: |
   This document demonstrates the successful migration from LaTeX-based document 
@@ -9,7 +10,6 @@ abstract: |
   and layout options while maintaining the aesthetic quality that made our 
   original LaTeX templates successful.
 vibe: "classic"
-fontsize: 12pt
 ---
 
 # Introduction

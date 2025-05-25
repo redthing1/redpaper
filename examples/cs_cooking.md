@@ -1,6 +1,6 @@
 ---
 title: "The Computer Scientist's Guide to Cooking: A Technical Approach to Food Science"
-fontsize: 10pt
+fontsize: 11pt
 numbersections: true
 vibe: artistic
 ---

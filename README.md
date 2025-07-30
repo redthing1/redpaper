@@ -47,3 +47,8 @@ style2, double column (paper-like) layout
 ```sh
 pandoc --dpi=300 --pdf-engine=lualatex --template /data/templates/style2/style2-double.tex -i ./examples/crypto_showcase.md -o ./examples/crypto_showcase_style2_dbl.pdf
 ```
+
+typst test:
+```sh
+pandoc -i ./examples/huffman_coding.md -f markdown --wrap=none --pdf-engine=typst --pdf-engine-opt="--font-path=./fonts" --template=./templates/style2/style2.typ -o ./examples/huffman_coding.pdf
+```

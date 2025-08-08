@@ -27,10 +27,12 @@ $endif$
     numbering: "1",
   )
   
-  apply_common_styling(fonts, adjustments, {
-    render_header(title, subtitle, author, date, abstract, fonts)
-    doc
-  })
+  apply_base_styling(fonts, adjustments,
+    apply_article_headings(fonts, {
+      render_header(title, subtitle, author, date, abstract, fonts)
+      doc
+    })
+  )
 }
 
 #show: doc => conf(

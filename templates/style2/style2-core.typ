@@ -331,20 +331,8 @@
   }
 }
 
-// apply all common styling at once
-#let apply_common_styling(fonts, adjustments, doc, heading-sizes: none, heading-spacing: none) = {
-  // default heading sizes, can be overridden
-  let default-heading-sizes = (
-    h1: 1.3em,
-    h2: 1.15em, 
-    h3: 1.05em,
-  )
-  
-  // default spacing: (top-h1, top-other, bottom)
-  let default-heading-spacing = (3em, 1.4em, 1.4em)
-  
-  let heading-config = if heading-sizes != none { heading-sizes } else { default-heading-sizes }
-  let spacing-config = if heading-spacing != none { heading-spacing } else { default-heading-spacing }
+// apply basic shared styling (text, tables, code, etc.)
+#let apply_base_styling(fonts, adjustments, doc) = {
   set text(
     font: fonts.serif,
     size: adjustments.font-size,
@@ -357,41 +345,6 @@
     spacing: adjustments.spacing,
     first-line-indent: 0pt,
   )
-  
-  set heading(numbering: "1.1")
-  
-  show heading: it => {
-    v(if it.level == 1 { spacing-config.at(0) } else { spacing-config.at(1) }, weak: true)
-    
-    // levels 1-2 get numbering, 3+ get plain text only
-    let content = if it.level <= 2 { it } else { it.body }
-    
-    if it.level == 1 {
-      text(
-        size: heading-config.h1,
-        weight: 400,
-        font: fonts.serif,
-        content
-      )
-    } else if it.level == 2 {
-      text(
-        size: heading-config.h2,
-        weight: 400,
-        font: fonts.serif,
-        content
-      )
-    } else {
-      text(
-        size: heading-config.h3,
-        style: "italic",
-        weight: 400,
-        font: fonts.serif,
-        content
-      )
-    }
-    
-    v(spacing-config.at(2), weak: true)
-  }
   
   // clean, modern table styling
   set table(
@@ -527,6 +480,59 @@
   show link: it => text(fill: rgb("#1d4ed8"), it)
   show emph: it => text(style: "italic", it)
   show strong: it => text(weight: 450, it)
+
+  doc
+}
+
+// apply article-style heading formatting (for single/double column templates)
+#let apply_article_headings(fonts, doc, heading-sizes: none, heading-spacing: none) = {
+  // default heading sizes, can be overridden
+  let default-heading-sizes = (
+    h1: 1.3em,
+    h2: 1.15em, 
+    h3: 1.05em,
+  )
+  
+  // default spacing: (top-h1, top-other, bottom)
+  let default-heading-spacing = (3em, 1.4em, 1.4em)
+  
+  let heading-config = if heading-sizes != none { heading-sizes } else { default-heading-sizes }
+  let spacing-config = if heading-spacing != none { heading-spacing } else { default-heading-spacing }
+
+  set heading(numbering: "1.1")
+  
+  show heading: it => {
+    v(if it.level == 1 { spacing-config.at(0) } else { spacing-config.at(1) }, weak: true)
+    
+    // levels 1-2 get numbering, 3+ get plain text only
+    let content = if it.level <= 2 { it } else { it.body }
+    
+    if it.level == 1 {
+      text(
+        size: heading-config.h1,
+        weight: 400,
+        font: fonts.serif,
+        content
+      )
+    } else if it.level == 2 {
+      text(
+        size: heading-config.h2,
+        weight: 400,
+        font: fonts.serif,
+        content
+      )
+    } else {
+      text(
+        size: heading-config.h3,
+        style: "italic",
+        weight: 400,
+        font: fonts.serif,
+        content
+      )
+    }
+    
+    v(spacing-config.at(2), weak: true)
+  }
 
   doc
 }

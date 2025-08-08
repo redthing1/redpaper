@@ -30,26 +30,28 @@ $endif$
   
   set columns(gutter: 0.75in)
   
-  apply_common_styling(fonts, adjustments, {
-    // for double column layouts, we need to handle the header differently
-    // using place with scope: "parent" to span both columns
-    if title != none or subtitle != none or author != none or date != none or abstract != none {
-      place(
-        top + center,
-        float: true,
-        scope: "parent",
-        clearance: 2em,
-      )[
-        #render_header(title, subtitle, author, date, abstract, fonts)
-      ]
-    }
-    
-    doc
-  }, heading-sizes: (
-    h1: 1.15em,
-    h2: 1.05em, 
-    h3: 0.95em,
-  ), heading-spacing: (2.0em, 1.2em, 1.0em))
+  apply_base_styling(fonts, adjustments,
+    apply_article_headings(fonts, {
+      // for double column layouts, we need to handle the header differently
+      // using place with scope: "parent" to span both columns
+      if title != none or subtitle != none or author != none or date != none or abstract != none {
+        place(
+          top + center,
+          float: true,
+          scope: "parent",
+          clearance: 2em,
+        )[
+          #render_header(title, subtitle, author, date, abstract, fonts)
+        ]
+      }
+      
+      doc
+    }, heading-sizes: (
+      h1: 1.15em,
+      h2: 1.05em, 
+      h3: 0.95em,
+    ), heading-spacing: (2.0em, 1.2em, 1.0em))
+  )
 }
 
 #show: doc => conf(

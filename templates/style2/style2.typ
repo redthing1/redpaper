@@ -97,19 +97,22 @@ $endif$
   show heading: it => {
     v(if it.level == 1 { 3em } else { 1.4em }, weak: true)
     
+    // levels 1-2 get numbering, 3+ get plain text only
+    let content = if it.level <= 2 { it } else { it.body }
+    
     if it.level == 1 {
       text(
         size: 1.3em,
         weight: 400,
         font: fonts.serif,
-        it
+        content
       )
     } else if it.level == 2 {
       text(
         size: 1.15em,
         weight: 400,
         font: fonts.serif,
-        it
+        content
       )
     } else {
       text(
@@ -117,7 +120,7 @@ $endif$
         style: "italic",
         weight: 400,
         font: fonts.serif,
-        it
+        content
       )
     }
     

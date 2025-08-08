@@ -1,6 +1,7 @@
 ---
-title: "Huffman Coding: Theory, Algorithm, and Implementation"
+title: "Huffman Coding: Theory and Implementation"
 subtitle: "A Guide to Optimal Prefix-Free Compression"
+author: Claude 4 Sonnet
 date: 2025-07-29
 vibe: classic
 fontsize: 10pt

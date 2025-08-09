@@ -21,6 +21,9 @@ $endif$
   let fonts = get_fonts(vibe)
   let adjustments = get_adjustments(vibe, fontsize)
   
+  // override spacing for book layout
+  let adjustments = (..adjustments, spacing: 13pt)
+  
   set page(
     paper: "us-letter",
     margin: (inside: 1.25in, outside: 1in, y: 1in),
@@ -145,6 +148,7 @@ $endif$
       )
     )
   }
+  
   
   apply_base_styling(fonts, adjustments, {
     // table of contents (always included for books)

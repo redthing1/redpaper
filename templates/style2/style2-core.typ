@@ -52,21 +52,21 @@
   let adjustment_config = (
     classic: (
       font-size: base-font-size,
-      spacing: 1em, 
-      leading: 0.8em,
-      list-spacing: 0.8em,
+      spacing: 11pt, 
+      leading: 9pt,
+      list-spacing: 9pt,
     ),
     alternate: (
       font-size: base-font-size * 0.95,
-      spacing: 1em, 
-      leading: 0.8em,
-      list-spacing: 0.8em,
+      spacing: 11pt, 
+      leading: 9pt,
+      list-spacing: 9pt,
     ),
     artistic: (
       font-size: base-font-size * 0.9,
-      spacing: 1.4em, 
-      leading: 1em,
-      list-spacing: 1em,
+      spacing: 15pt, 
+      leading: 11pt,
+      list-spacing: 11pt,
     ),
   )
   adjustment_config.at(vibe, default: adjustment_config.classic)

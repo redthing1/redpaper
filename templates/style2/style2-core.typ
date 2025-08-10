@@ -6,9 +6,8 @@
   v(2em, weak: true)
   align(center)[
     #line(
-      start: (20%, 0%),
-      end: (80%, 0%),
-      stroke: 1pt + rgb("#d1d5db")
+      length: 25%,
+      stroke: 0.5pt + luma(160)
     )
   ]
   v(2em, weak: true)

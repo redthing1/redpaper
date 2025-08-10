@@ -13,13 +13,16 @@ $endif$
   date: none,
   abstract: none,
   vibe: "classic",
-  fontsize: 11pt,
+  fontsize: 10pt,
   pagestyle: "double",
   doc,
 ) = {
   
   let fonts = get_fonts(vibe)
   let adjustments = get_adjustments(vibe, fontsize)
+  
+  // override spacing for tighter double column layout with paragraph indents
+  let adjustments = (..adjustments, spacing: 8pt, leading: 7pt, first-line-indent: 1.2em)
   
   set page(
     paper: "us-letter",
@@ -47,10 +50,13 @@ $endif$
       
       doc
     }, heading-sizes: (
-      h1: 1.15em,
+      h1: 1.1em,
       h2: 1.05em, 
-      h3: 0.95em,
-    ), heading-spacing: (2.0em, 1.2em, 1.0em))
+      h3: 1.0em,
+    ), heading-spacing: (
+      before: (h1: 1.6em, h2: 1.0em, h3: 1.0em),
+      after: (h1: 1.2em, h2: 1.0em, h3: 1.0em)
+    ))
   )
 }
 

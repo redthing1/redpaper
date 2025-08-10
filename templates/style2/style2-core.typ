@@ -83,7 +83,7 @@
     justify: true,
     leading: adjustments.leading,
     spacing: adjustments.spacing,
-    first-line-indent: 0pt,
+    first-line-indent: adjustments.at("first-line-indent", default: 0pt),
   )
   
   doc
@@ -342,7 +342,7 @@
     justify: true,
     leading: adjustments.leading,
     spacing: adjustments.spacing,
-    first-line-indent: 0pt,
+    first-line-indent: adjustments.at("first-line-indent", default: 0pt),
   )
   
   // clean, modern table styling
@@ -492,16 +492,30 @@
     h3: 1.05em,
   )
   
-  // default spacing: (top-h1, top-other, bottom)
-  let default-heading-spacing = (3em, 1.4em, 1.4em)
+  // default spacing: can be (before-h1, before-other, after) or (before: (h1: x, h2: y, h3: z), after: (h1: x, h2: y, h3: z))
+  let default-heading-spacing = (before: (h1: 3em, h2: 1.4em, h3: 1.4em), after: (h1: 1.4em, h2: 1.2em, h3: 1.0em))
   
   let heading-config = if heading-sizes != none { heading-sizes } else { default-heading-sizes }
-  let spacing-config = if heading-spacing != none { heading-spacing } else { default-heading-spacing }
+  
+  // handle both old format (3-tuple) and new format (dict with before/after)
+  let spacing-config = if heading-spacing != none {
+    if type(heading-spacing) == array {
+      // old format: (before-h1, before-other, after)
+      (before: (h1: heading-spacing.at(0), h2: heading-spacing.at(1), h3: heading-spacing.at(1)), 
+       after: (h1: heading-spacing.at(2), h2: heading-spacing.at(2), h3: heading-spacing.at(2)))
+    } else {
+      // new format: dict with before/after
+      heading-spacing
+    }
+  } else { 
+    default-heading-spacing 
+  }
 
   set heading(numbering: "1.1")
   
   show heading: it => {
-    v(if it.level == 1 { spacing-config.at(0) } else { spacing-config.at(1) }, weak: true)
+    let level-key = if it.level == 1 { "h1" } else if it.level == 2 { "h2" } else { "h3" }
+    v(spacing-config.before.at(level-key), weak: true)
     
     // levels 1-2 get numbering, 3+ get plain text only
     let content = if it.level <= 2 { it } else { it.body }
@@ -530,7 +544,8 @@
       )
     }
     
-    v(spacing-config.at(2), weak: true)
+    let level-key = if it.level == 1 { "h1" } else if it.level == 2 { "h2" } else { "h3" }
+    v(spacing-config.after.at(level-key), weak: true)
   }
 
   doc
